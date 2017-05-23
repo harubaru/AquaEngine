@@ -8,6 +8,7 @@
 #include <SDL2/SDL_opengl.h>
 
 #include <graphics/Display.h>
+#include <graphics/Shader.h>
 
 class Graphics
 {

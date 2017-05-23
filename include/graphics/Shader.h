@@ -23,9 +23,6 @@ private:
 public:
 	Shader(const std::string& VertShaderFile, const std::string& FragShaderFile);
 	~Shader();
-	
-	void LoadVertShader(const std::string& ShaderFile);
-	void LoadFragShader(const std::string& ShaderFile);
 
 	void Bind();
 	void Unbind();

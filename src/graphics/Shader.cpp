@@ -55,11 +55,9 @@ GLuint Shader::CompileShader(const std::string& SourceCode, gl_shadertype shader
 	glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
 
 	if (log_length > 0) {
-		std::vector<char> errlog(log_length + 1);
-		glGetShaderInfoLog(shader, log_length, NULL, &errlog[0]);
-		if(errlog.size() > 1) {
-			std::cout << "\nShader failed to compile!\nError:\n" << errlog[0] << "\n";
-		}
+		GLchar infolog[log_length];
+		glGetShaderInfoLog(shader, log_length, NULL, infolog);
+		std::cout << "Shader failed to compile!\n" << infolog << std::endl;
 	}
 	return shader;
 }

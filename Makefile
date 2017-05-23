@@ -7,7 +7,7 @@ LIBRARY_PATHS = -LC:./dependencies/libs
 COMPILER_FLAGS = -std=c++14 -I./include -O3 -Wall -Wextra -Werror
 LINKER_FLAGS   = -lmingw32 -lSDL2main -lSDl2 -lglew32 -lopengl32
 
-BINARY = aqua2d.exe
+BINARY = AquaGL.exe
 BINFOLDER = ./bin
 
 include ./src/Makefile

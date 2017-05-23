@@ -72,9 +72,9 @@ GLuint Shader::LinkShaders(GLuint shader1, GLuint shader2)
 	glGetProgramiv(shader_program, GL_INFO_LOG_LENGTH, &log_length);
 
 	if(log_length > 0) {
-		std::vector<char> errlog(log_length + 1);
-		glGetProgramInfoLog(shader_program, log_length, NULL, &errlog[0]);
-		std::cout << "\nFailed to create Shader Program!\nError : \n" << errlog[0] << std::endl;
+		GLchar infolog[log_length];
+		glGetProgramInfoLog(shader_program, log_length, NULL, infolog);
+		std::cout << "\nFailed to create Shader Program!\nError : \n" << infolog << std::endl;
 		return 0;
 	}
 

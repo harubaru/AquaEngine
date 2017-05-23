@@ -22,7 +22,7 @@ private:
 	GLuint m_VertexArrayObject;
 	GLuint m_VertexArrayBuffers[NUM_BUFFERS];
 public:
-	Mesh(Vertex* vertices, GLuint VertexCount);
+	Mesh(Vertex* vertices, GLsizei VertexCount);
 	~Mesh();
 
 	void Draw();

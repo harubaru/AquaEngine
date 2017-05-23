@@ -2,7 +2,7 @@
 #define AQUAGL_MESH_H
 
 #include <GL/glew.h>
-#include <glm/glm.hpp>
+#include <graphics/glm/glm.hpp>
 
 struct Vertex {
 	Vertex(float x, float y, float z) { position = glm::vec3(x, y, z); }

@@ -16,7 +16,7 @@ class Shader{
 private:
 	std::string GetShaderSource(const std::string& ShaderPath);
 	GLuint CompileShader(const std::string& SourceCode, gl_shadertype shadertype);
-	GLuint LinkShaders(GLuint shader1, GLuint shader2);
+	void LinkShaders(GLuint shader1, GLuint shader2);
 	
 	GLuint VertShader, FragShader;
 	GLuint ShaderProgram;

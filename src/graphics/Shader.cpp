@@ -62,35 +62,33 @@ GLuint Shader::CompileShader(const std::string& SourceCode, gl_shadertype shader
 	return shader;
 }
 
-GLuint Shader::LinkShaders(GLuint shader1, GLuint shader2)
+void Shader::LinkShaders(GLuint shader1, GLuint shader2)
 {
-	GLuint shader_program = glCreateProgram();
-	glAttachShader(shader_program, shader1);
-	glAttachShader(shader_program, shader2);
+	ShaderProgram = glCreateProgram();
+	glAttachShader(ShaderProgram, shader1);
+	glAttachShader(ShaderProgram, shader2);
+	
+	glLinkProgram(ShaderProgram);
 
 	int log_length;
-	glGetProgramiv(shader_program, GL_INFO_LOG_LENGTH, &log_length);
+	glGetProgramiv(ShaderProgram, GL_INFO_LOG_LENGTH, &log_length);
 
 	if(log_length > 0) {
 		GLchar infolog[log_length];
-		glGetProgramInfoLog(shader_program, log_length, NULL, infolog);
+		glGetProgramInfoLog(ShaderProgram, log_length, NULL, infolog);
 		std::cout << "\nFailed to create Shader Program!\nError : \n" << infolog << std::endl;
-		return 0;
 	}
-
-	return shader_program;
-
 }
 
 Shader::Shader(const std::string& VertShaderFile, const std::string& FragShaderFile)
 {
 	std::string VertShaderSource = GetShaderSource(VertShaderFile);
-	 std::string FragShaderSource = GetShaderSource(FragShaderFile);
+	std::string FragShaderSource = GetShaderSource(FragShaderFile);
 
 	VertShader = CompileShader(VertShaderSource, VERTEX_SHADER);
 	FragShader = CompileShader(FragShaderSource, FRAGMENT_SHADER);
 	
-	ShaderProgram = LinkShaders(VertShader, FragShader);
+	LinkShaders(VertShader, FragShader);
 }
 
 Shader::~Shader() 

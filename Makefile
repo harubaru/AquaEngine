@@ -1,9 +1,11 @@
 CC = g++
+C = gcc
 LD = g++
 
 INCLUDE_PATHS = -IC:./dependencies/includes
 LIBRARY_PATHS = -LC:./dependencies/libs
 
+C_COMPILER_FLAGS = -I./include -O3
 COMPILER_FLAGS = -std=c++14 -I./include -O3 -Wall -Wextra -Werror
 LINKER_FLAGS   = -lmingw32 -lSDL2main -lSDl2 -lglew32 -lopengl32
 
@@ -20,6 +22,9 @@ $(BINARY): $(OBJS)
 
 %.o: %.cpp
 	$(CC) $(COMPILER_FLAGS) -c $< -o $@
+
+%.o: %.c
+	$(C) $(C_COMPILER_FLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJS) $(BINFOLDER)/$(BINARY)

@@ -102,6 +102,26 @@ Shader::~Shader()
 	glDeleteProgram(ShaderProgram);
 }
 
+void Shader::SetModel(const glm::mat4& Model)
+{
+	glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, "Model"), 1, GL_FALSE, glm::value_ptr(Model));
+}
+
+void Shader::SetView(const glm::mat4& View)
+{
+	glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, "View"), 1, GL_FALSE, glm::value_ptr(View));
+}
+
+void Shader::SetProjection(const glm::mat4& Projection)
+{
+	glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, "Projection"), 1, GL_FALSE, glm::value_ptr(Projection));
+}
+
+void Shader::SetQuadColor(const glm::vec4& Color)
+{
+	glUniform4fv(glGetUniformLocation(ShaderProgram, "QuadColor"), 1, glm::value_ptr(Color));
+}
+
 void Shader::Bind()
 {
 	glUseProgram(ShaderProgram);

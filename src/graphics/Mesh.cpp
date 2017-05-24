@@ -21,7 +21,6 @@ Mesh::Mesh(Vertex* vertices, GLsizei VertexCount) : DrawCount(VertexCount)
 Mesh::~Mesh()
 {
 	glDeleteVertexArrays(1, &m_VertexArrayObject);
-
 	glDeleteBuffers(1, &m_VertexArrayBuffer);
 }
 

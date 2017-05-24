@@ -6,6 +6,9 @@
 #include <vector>
 #include <fstream>
 #include <GL/glew.h>
+#include <graphics/glm/glm.hpp>
+#include <graphics/glm/gtx/transform.hpp>
+#include <graphics/glm/gtc/type_ptr.hpp>
 
 enum gl_shadertype {
 	VERTEX_SHADER = GL_VERTEX_SHADER,
@@ -23,6 +26,12 @@ private:
 public:
 	Shader(const std::string& VertShaderFile, const std::string& FragShaderFile);
 	~Shader();
+	
+	void SetModel(const glm::mat4& Model);
+	void SetView(const glm::mat4& View);
+	void SetProjection(const glm::mat4& Projection);
+
+	void SetQuadColor(const glm::vec4& Color);
 
 	void Bind();
 	void Unbind();

@@ -1,10 +1,14 @@
 #version 330
 
-varying vec4 PrimitiveColor;
-varying vec2 TexCoord;
+in vec2 TexCoord;
+
+layout (location = 0) out vec4 Color;
+
+uniform sampler2D sampler;
 
 void main()
 {
-	gl_FragColor = PrimitiveColor;
+	Color = mix(vec4(1.0, 0.0, 0.0, 1.0), texture2D(sampler, TexCoord), 1.0);
+//	Color = vec4(1.0, 0.0, 0.0, 1.0);
 }
 

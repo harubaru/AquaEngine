@@ -17,6 +17,9 @@ Graphics::Graphics(Display& display)
 
 void Graphics::Clear(float r, float g, float b)
 {
+	int w, h;
+	m_Display->GetSize(&w, &h);
+	glViewport(0, 0, w, h);
 	glClearColor(r, g, b, 255.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 }

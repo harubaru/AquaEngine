@@ -27,6 +27,7 @@ Display::~Display()
 
 void Display::Update()
 {
+	SDL_GL_SetSwapInterval(1);
 	SDL_GL_SwapWindow(m_Window);
 
 	while(SDL_PollEvent(&m_InputEvent)) {
@@ -34,6 +35,11 @@ void Display::Update()
 		if(m_InputEvent.type == SDL_QUIT)
 			Close = true;
 	}
+}
+
+void Display::GetSize(int* w, int* h)
+{
+	SDL_GetWindowSize(m_Window, w, h);
 }
 
 SDL_Window* Display::GetWindow()

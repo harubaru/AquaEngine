@@ -21,6 +21,7 @@ public:
 	bool Close;
 
 	void Update();
+	void GetSize(int* w, int* h);
 
 	SDL_Window* GetWindow();
 };

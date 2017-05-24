@@ -10,7 +10,8 @@ class Texture {
 private:
 	GLuint m_texHandle;
 public:
-	Texture(std::string& FilePath);
+	Texture(std::string FilePath);
+	~Texture();
 
 	void Bind(GLuint texUnit);
 	void Unbind();

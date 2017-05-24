@@ -5,22 +5,24 @@
 #include <graphics/glm/glm.hpp>
 
 struct Vertex {
-	Vertex(float x, float y, float z) { position = glm::vec3(x, y, z); }
-	glm::vec3 position;
-};
+	Vertex() : position(glm::vec3(0, 0, 0)), texcoord(glm::vec2(0, 0)) {}
+	Vertex(float x, float y, float z, float u, float v) { 
+		position = glm::vec3(x, y, z);
+		texcoord = glm::vec2(u, v);
+	}
 
-enum buffer_pos {
-	POSITION_POS = 0
+	glm::vec3 position;
+	glm::vec2 texcoord;
 };
 
 class Mesh{
 private:
-	static const unsigned int NUM_BUFFERS = 1;
+	static const unsigned int NUM_BUFFERS = 2;
 
 	GLsizei DrawCount;
 
 	GLuint m_VertexArrayObject;
-	GLuint m_VertexArrayBuffers[NUM_BUFFERS];
+	GLuint m_VertexArrayBuffer;
 public:
 	Mesh(Vertex* vertices, GLsizei VertexCount);
 	~Mesh();

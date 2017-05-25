@@ -34,6 +34,8 @@ int main(int argv, char** args)
 		display.Update();
 		graphics.Clear(0.0, 0.1, 0.1);
 		
+		mt.Rotate(glm::vec3(0, 1, 0), 0.016 * 1);
+
 		shader.Bind();
 		shader.SetModel(mt.GetModel());
 		shader.SetProjection(camera.GetProjection());

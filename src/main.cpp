@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <iostream>
+#include <vector>
 #include <graphics/Graphics.h>
 #include <graphics/Mesh.h>
 #include <graphics/MeshTransform.h>
@@ -23,13 +24,15 @@ int main(int argv, char** args)
 		Vertex( 1.0f, -1.0f, 0.0f, 0.5f, 1.0f )
 	};	
 	
+	std::vector<GLuint> indices = { 0, 1, 2 };
+
 	Camera camera(glm::vec3(0, 0, -3), 70.0f, 800.0f / 600.0f, 0.01f, 1000.0f);
 
 	Shader shader("./resources/shaders/primitives/vert_quad.glsl", "./resources/shaders/primitives/frag_quad.glsl");
-	Mesh triangle(vertices, sizeof(vertices)/sizeof(vertices[0]));
+	Mesh triangle(vertices, indices);
 	MeshTransform mt(glm::vec3(0, 0, 0), glm::vec3(0, 0, 1), glm::vec3(1, 1, 1));
 	Texture tex("./resources/textures/BrickWall.jpg");
-	
+
 	while(!display.Close) {
 		display.Update();
 		graphics.Clear(0.0, 0.1, 0.1);

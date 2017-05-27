@@ -1,6 +1,7 @@
 #ifndef AQUAGL_MESH_H
 #define AQUAGL_MESH_H
 
+#include <vector>
 #include <GL/glew.h>
 #include <graphics/glm/glm.hpp>
 
@@ -12,6 +13,7 @@ struct Vertex {
 	}
 
 	glm::vec3 position;
+//	glm::vec3 normal; // TODO: Support this later!
 	glm::vec2 texcoord;
 };
 
@@ -21,10 +23,11 @@ private:
 
 	GLsizei DrawCount;
 
+	GLuint m_IndexBufferObject;
 	GLuint m_VertexArrayObject;
 	GLuint m_VertexArrayBuffer;
 public:
-	Mesh(Vertex* vertices, GLsizei VertexCount);
+	Mesh(Vertex* vertices, std::vector<GLuint> Indices);
 	~Mesh();
 
 	void Draw();

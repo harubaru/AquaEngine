@@ -6,6 +6,7 @@
 #include <graphics/MeshTransform.h>
 #include <graphics/Texture.h>
 #include <graphics/Camera.h>
+#include <file/obj.h>
 
 using namespace std;
 
@@ -20,8 +21,8 @@ int main(int argv, char** args)
 	Vertex vertices[] = {
 		//      x       y     z     tex coords
 		Vertex( -1.0f, -1.0f, 0.0f, 0.0f, 0.0f ), 
-		Vertex( 0.0f, 1.0f, 0.0f, 1.0f, 0.0f ), 
-		Vertex( 1.0f, -1.0f, 0.0f, 0.5f, 1.0f )
+		Vertex( 0.0f,   1.0f, 0.0f, 1.0f, 0.0f ), 
+		Vertex( 1.0f,  -1.0f, 0.0f, 0.5f, 1.0f )
 	};	
 	
 	std::vector<GLuint> indices = { 0, 1, 2 };
@@ -32,7 +33,15 @@ int main(int argv, char** args)
 	Mesh triangle(vertices, indices);
 	MeshTransform mt(glm::vec3(0, 0, 0), glm::vec3(0, 0, 1), glm::vec3(1, 1, 1));
 	Texture tex("./resources/textures/BrickWall.jpg");
-
+		
+	std::vector<glm::vec3> mesh_vertices;
+	std::vector<glm::vec3> normals;
+	std::vector<glm::vec2> texcoords;
+	std::vector<unsigned int> mesh_indices;
+	bool res = ParseOBJFile("./resources/meshes/cube.obj", mesh_vertices, normals, texcoords, indices);
+	if(!res)
+		(void)res;
+		
 	while(!display.Close) {
 		display.Update();
 		graphics.Clear(0.0, 0.1, 0.1);

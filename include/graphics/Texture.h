@@ -11,11 +11,13 @@ private:
 	GLuint m_texHandle;
 public:
 	Texture(std::string FilePath);
+	Texture(){}
 	~Texture();
+
+	void LoadFile(std::string FilePath);
 
 	void Bind(GLuint texUnit);
 	void Unbind();
 };
 
 #endif
-

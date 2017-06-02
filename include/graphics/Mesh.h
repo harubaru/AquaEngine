@@ -1,37 +1,37 @@
 #ifndef AQUAGL_MESH_H
 #define AQUAGL_MESH_H
 
+#include <iostream>
+#include <string>
 #include <vector>
 #include <GL/glew.h>
 #include <graphics/glm/glm.hpp>
 
 struct Vertex {
 	Vertex() : position(glm::vec3(0, 0, 0)), texcoord(glm::vec2(0, 0)) {}
-	Vertex(float x, float y, float z, float u, float v) { 
+	Vertex(float x, float y, float z, float nx, float ny, float nz, float u, float v) {
 		position = glm::vec3(x, y, z);
+		normal = glm::vec3(nx, ny, nz);
 		texcoord = glm::vec2(u, v);
 	}
 
 	glm::vec3 position;
-//	glm::vec3 normal; // TODO: Support this later!
+	glm::vec3 normal;
 	glm::vec2 texcoord;
 };
 
 class Mesh{
 private:
-	static const unsigned int NUM_BUFFERS = 2;
-
 	GLsizei DrawCount;
 
 	GLuint m_IndexBufferObject;
 	GLuint m_VertexArrayObject;
 	GLuint m_VertexArrayBuffer;
 public:
-	Mesh(Vertex* vertices, std::vector<GLuint> Indices);
+	Mesh(Vertex* vertices, std::vector<uint32_t> Indices);
 	~Mesh();
 
 	void Draw();
 };
 
 #endif
-

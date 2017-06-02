@@ -14,9 +14,11 @@ Mesh::Mesh(Vertex* vertices, std::vector<GLuint> Indices) : DrawCount(Indices.si
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)12);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)12);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)24);
 
 	glBindVertexArray(0); // unbind vao
 }
@@ -33,9 +35,10 @@ void Mesh::Draw()
 	glBindVertexArray(m_VertexArrayObject);
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
 	glDrawElements(GL_TRIANGLES, DrawCount, GL_UNSIGNED_INT, 0);
+	glDisableVertexAttribArray(2);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(0);
 	glBindVertexArray(0);
 }
-

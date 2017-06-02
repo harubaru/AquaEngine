@@ -2,9 +2,33 @@
 
 Texture::Texture(std::string FilePath)
 {
+	this->LoadFile(FilePath);
+}
+
+Texture::~Texture()
+{
+	glDeleteTextures(1, &m_texHandle);
+}
+
+void Texture::Bind(GLuint texUnit)
+{
+	if(texUnit > GL_MAX_TEXTURE_UNITS)
+		return;
+
+	glActiveTexture(GL_TEXTURE0 + texUnit);
+	glBindTexture(GL_TEXTURE_2D, m_texHandle);
+}
+
+void Texture::Unbind()
+{
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Texture::LoadFile(std::string FilePath)
+{
 	int w, h, comp;
 	unsigned char* texData = stbi_load(FilePath.c_str(), &w, &h, &comp, STBI_rgb_alpha);
-	
+
 	if(texData == NULL) {
 		std::cout << "ERROR: Cannot load Texture! FILE: " << FilePath << std::endl;
 		return;
@@ -27,23 +51,3 @@ Texture::Texture(std::string FilePath)
 
 	stbi_image_free(texData);
 }
-
-Texture::~Texture()
-{
-	glDeleteTextures(1, &m_texHandle);
-}
-
-void Texture::Bind(GLuint texUnit)
-{
-	if(texUnit > GL_MAX_TEXTURE_UNITS)
-		return;
-
-	glActiveTexture(GL_TEXTURE0 + texUnit);
-	glBindTexture(GL_TEXTURE_2D, m_texHandle);
-}
-
-void Texture::Unbind()
-{
-	glBindTexture(GL_TEXTURE_2D, 0);
-}
-

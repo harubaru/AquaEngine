@@ -6,16 +6,22 @@ Model::Model(const std::string& FilePath)
         const aiScene* scene = importer.ReadFile(FilePath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
         if(!scene || (scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE) || !scene->mRootNode) {
-                std::cout << "Assimp Error: " << importer.GetErrorString() << std::endl;
+                std::cout << "Asset Importing Error: " << importer.GetErrorString() << std::endl;
                 return;
         }
 
         this->MeshCount = scene->mRootNode->mNumMeshes;
         this->FilePath = FilePath;
 
-        std::cout << "Num Meshes: " << MeshCount << " " << scene->mRootNode->mNumMeshes << " \n";
+        Meshes.reserve(MeshCount + 1);
 
         this->ProcessNode(scene->mRootNode, scene);
+}
+
+Model::~Model()
+{
+        for(uint32_t i = 0; i < MeshCount; i++)
+                Meshes[i].Destroy();
 }
 
 void Model::ProcessNode(aiNode* Node, const aiScene* Scene)
@@ -38,12 +44,9 @@ Mesh Model::ProcessMesh(aiMesh* mesh)
 
         for(uint32_t i = 0; i < mesh->mNumVertices; i++) {
                 Vertex vertex;
-                glm::vec3 v;
 
-                v.x = mesh->mVertices[i].x;
-                v.y = mesh->mVertices[i].y;
-                v.z = mesh->mVertices[i].z;
-                vertex.position = v;
+                vertex.position = glm::vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
+                vertex.normal = glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
 
                 if(mesh->mTextureCoords[0]) {
                         glm::vec2 texcoord;
@@ -59,8 +62,9 @@ Mesh Model::ProcessMesh(aiMesh* mesh)
         for(uint32_t f_index = 0; f_index < mesh->mNumFaces; f_index++) {
                 aiFace face = mesh->mFaces[f_index];
 
-                for(unsigned int i_index = 0; i_index < face.mNumIndices; i_index++)
+                for(unsigned int i_index = 0; i_index < face.mNumIndices; i_index++) {
                         indices.push_back(face.mIndices[i_index]);
+                }
         }
 
         if(mesh->mMaterialIndex > 0) { // TODO: process materials.
@@ -72,4 +76,7 @@ Mesh Model::ProcessMesh(aiMesh* mesh)
 
 void Model::Render()
 {
+        for(unsigned int i = 0; i < Meshes.size(); i++) {
+                Meshes[i].Draw();
+        }
 }

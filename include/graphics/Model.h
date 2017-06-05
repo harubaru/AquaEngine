@@ -19,9 +19,11 @@ private:
 
 public:
 	Model(const std::string& FilePath);
-	void Render();
-	std::string FilePath;
+	~Model();
 
+	void Render();
+
+	std::string FilePath;
 	uint32_t MeshCount;
 };
 

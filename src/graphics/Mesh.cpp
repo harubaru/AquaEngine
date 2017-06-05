@@ -25,6 +25,11 @@ Mesh::Mesh(Vertex* vertices, std::vector<GLuint> Indices) : DrawCount(Indices.si
 
 Mesh::~Mesh()
 {
+
+}
+
+void Mesh::Destroy()
+{
 	glDeleteVertexArrays(1, &m_VertexArrayObject);
 	glDeleteBuffers(1, &m_VertexArrayBuffer);
 	glDeleteBuffers(1, &m_IndexBufferObject);

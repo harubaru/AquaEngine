@@ -39,14 +39,14 @@ GLuint Shader::CompileShader(const std::string& SourceCode, gl_shadertype shader
 
 		default:
 			shader = 0; // will be handled later in code
-			break;	
+			break;
 	}
 
 	if(!glIsShader(shader)) {
 		std::cout << "Invalid shadertype!\n";
 		return 0;
 	}
-	
+
 	const char *c_str = SourceCode.c_str();
 	glShaderSource(shader, 1, &c_str, NULL);
 	glCompileShader(shader);
@@ -67,7 +67,7 @@ void Shader::LinkShaders(GLuint shader1, GLuint shader2)
 	ShaderProgram = glCreateProgram();
 	glAttachShader(ShaderProgram, shader1);
 	glAttachShader(ShaderProgram, shader2);
-	
+
 	glLinkProgram(ShaderProgram);
 
 	int log_length;
@@ -87,11 +87,11 @@ Shader::Shader(const std::string& VertShaderFile, const std::string& FragShaderF
 
 	VertShader = CompileShader(VertShaderSource, VERTEX_SHADER);
 	FragShader = CompileShader(FragShaderSource, FRAGMENT_SHADER);
-	
+
 	LinkShaders(VertShader, FragShader);
 }
 
-Shader::~Shader() 
+Shader::~Shader()
 {
 	glDetachShader(ShaderProgram, VertShader);
 	glDetachShader(ShaderProgram, FragShader);
@@ -117,6 +117,11 @@ void Shader::SetProjection(const glm::mat4& Projection)
 	glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, "Projection"), 1, GL_FALSE, glm::value_ptr(Projection));
 }
 
+void Shader::SetCameraPos(const glm::vec3& CameraPos)
+{
+	glUniform3fv(glGetUniformLocation(ShaderProgram, "CameraPos"), 1, glm::value_ptr(CameraPos));
+}
+
 void Shader::SetQuadColor(const glm::vec4& Color)
 {
 	glUniform4fv(glGetUniformLocation(ShaderProgram, "QuadColor"), 1, glm::value_ptr(Color));
@@ -131,4 +136,3 @@ void Shader::Unbind()
 {
 	glUseProgram(0);
 }
-

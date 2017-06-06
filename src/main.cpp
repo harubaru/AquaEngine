@@ -15,15 +15,19 @@ int main(int argv, char** args)
 	(void)argv;
 	(void)args;
 
-	Display display(800, 600, "AquaGL");
+	Display display(1280, 800, "AquaGL");
 	Graphics graphics(display);
 
-	Camera camera(glm::vec3(0, 2, -10), 70.0f, 800.0f / 600.0f, 0.01f, 1000.0f);
+	int Width, Height;
+	display.GetSize(&Width, &Height);
+
+	Camera camera(glm::vec3(0, 2, -10), 70.0f, (float)Width / (float)Height, 0.1f, 100.0f);
 
 	Shader shader("./resources/shaders/primitives/vert_mesh.glsl", "./resources/shaders/primitives/frag_mesh.glsl");
 	MeshTransform mt(glm::vec3(0, 0, 0), glm::vec3(0, 0, 1), glm::vec3(1, 1, 1));
 	Texture tex("./resources/textures/BrickWall.jpg");
-	Model model("./resources/meshes/Cone.obj");
+	Model cone("./resources/meshes/Cone.obj");
+	Model cube("./resources/meshes/Cube.obj");
 
 	while(!display.Close) {
 		display.Update();
@@ -35,11 +39,14 @@ int main(int argv, char** args)
 		shader.SetModel(mt.GetModel());
 		shader.SetProjection(camera.GetProjection());
 		shader.SetView(camera.GetView());
+		shader.SetCameraPos(camera.GetPos());
 		shader.SetQuadColor(glm::vec4(1.0f, 1.0f, 0.0f, 1.0f));
 
 		tex.Bind(0);
-		model.Render();
+		cube.Render();
+		cone.Render();
 		tex.Unbind();
+
 		shader.Unbind();
 	}
 

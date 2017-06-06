@@ -28,7 +28,11 @@ public:
 	{
 		return m_Projection;
 	}
+
+	inline glm::vec3 GetPos()
+	{
+		return m_pos;
+	}
 };
 
 #endif
-

@@ -20,17 +20,18 @@ private:
 	std::string GetShaderSource(const std::string& ShaderPath);
 	GLuint CompileShader(const std::string& SourceCode, gl_shadertype shadertype);
 	void LinkShaders(GLuint shader1, GLuint shader2);
-	
+
 	GLuint VertShader, FragShader;
 	GLuint ShaderProgram;
 public:
 	Shader(const std::string& VertShaderFile, const std::string& FragShaderFile);
 	~Shader();
-	
+
 	void SetModel(const glm::mat4& Model);
 	void SetView(const glm::mat4& View);
 	void SetProjection(const glm::mat4& Projection);
 
+	void SetCameraPos(const glm::vec3& CameraPos);
 	void SetQuadColor(const glm::vec4& Color);
 
 	void Bind();
@@ -38,4 +39,3 @@ public:
 };
 
 #endif
-

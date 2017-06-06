@@ -1,6 +1,6 @@
 #include <graphics/Display.h>
 
-Display::Display(int w, int h, const std::string& title) : Close(false)
+Display::Display(int w, int h, const std::string& title, uint32_t AdditionalFlags) : Close(false)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 
@@ -9,14 +9,18 @@ Display::Display(int w, int h, const std::string& title) : Close(false)
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
-	
+
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-	m_Window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, SDL_WINDOW_OPENGL);
+	uint32_t SDL_Window_Flags = SDL_WINDOW_OPENGL;
+	if(AdditionalFlags)
+		SDL_Window_Flags |= AdditionalFlags;
+
+	m_Window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, SDL_Window_Flags);
 	m_OpenGLContext = SDL_GL_CreateContext(m_Window);
 }
 
@@ -47,4 +51,3 @@ SDL_Window* Display::GetWindow()
 {
 	return m_Window;
 }
-

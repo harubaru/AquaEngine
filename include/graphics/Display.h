@@ -15,9 +15,9 @@ class Display
 	SDL_GLContext m_OpenGLContext;
 	SDL_Event m_InputEvent;
 public:
-	Display(int w, int h, const std::string& title);
+	Display(int w, int h, const std::string& title, uint32_t AdditionalFlags);
 	~Display();
-	
+
 	bool Close;
 
 	void Update();
@@ -27,4 +27,3 @@ public:
 };
 
 #endif
-

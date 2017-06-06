@@ -15,7 +15,7 @@ int main(int argv, char** args)
 	(void)argv;
 	(void)args;
 
-	Display display(1280, 800, "AquaGL");
+	Display display(1280, 800, "AquaGL", SDL_WINDOW_RESIZABLE);
 	Graphics graphics(display);
 
 	int Width, Height;
@@ -40,7 +40,9 @@ int main(int argv, char** args)
 		shader.SetProjection(camera.GetProjection());
 		shader.SetView(camera.GetView());
 		shader.SetCameraPos(camera.GetPos());
-		shader.SetQuadColor(glm::vec4(1.0f, 1.0f, 0.0f, 1.0f));
+
+		display.GetSize(&Width, &Height);
+		camera.Update(glm::vec3(0, 2, -10), 70.0f, (float)Width / (float)Height, 0.1f, 100.0f);
 
 		tex.Bind(0);
 		cube.Render();

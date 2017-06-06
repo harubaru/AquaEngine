@@ -33,6 +33,14 @@ public:
 	{
 		return m_pos;
 	}
+
+	inline void Update(const glm::vec3& pos, float fov, float aspect, float zNear, float zFar)
+	{
+		m_Projection = glm::perspective(fov, aspect, zNear, zFar);
+		m_pos = pos;
+		m_forward = glm::vec3(0, 0, 1);
+		m_up = glm::vec3(0, 1, 0);
+	}
 };
 
 #endif

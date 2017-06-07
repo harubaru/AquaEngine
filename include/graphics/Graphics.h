@@ -2,6 +2,7 @@
 #define AQUA2D_GRAPHICS_H
 
 #include <iostream>
+#include <string>
 
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
@@ -16,10 +17,10 @@ private:
 	Display* m_Display;
 public:
 	Graphics(Display& display);
-	
+
 	void InitWindow(const char* title, int w, int h, uint32_t sdl_flags);
 	void Clear(float, float, float);
+	void GetGLError();
 };
 
 #endif
-

@@ -17,6 +17,7 @@ private:
 	void ProcessNode(aiNode* Node, const aiScene* Scene);
 	Mesh ProcessMesh(aiMesh* mesh);
 
+	bool MeshFail;
 public:
 	Model(const std::string& FilePath);
 	~Model();

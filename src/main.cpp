@@ -34,6 +34,7 @@ int main(int argv, char** args)
 
 	while(!display.Close) {
 		Clock_TickBegin(&clock);
+		graphics.GetGLError();
 
 		display.Update();
 		graphics.Clear(0.0, 0.0, 0.0);

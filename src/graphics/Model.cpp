@@ -7,8 +7,10 @@ Model::Model(const std::string& FilePath)
 
         if(!scene || (scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE) || !scene->mRootNode) {
                 std::cout << "Asset Importing Error: " << importer.GetErrorString() << std::endl;
+                MeshFail = true;
                 return;
         }
+        MeshFail = false;
 
         this->MeshCount = scene->mRootNode->mNumMeshes;
         this->FilePath = FilePath;
@@ -20,8 +22,10 @@ Model::Model(const std::string& FilePath)
 
 Model::~Model()
 {
-        for(uint32_t i = 0; i < MeshCount; i++)
-                Meshes[i].Destroy();
+        if(!MeshFail) {
+                for(uint32_t i = 0; i < MeshCount; i++)
+                        Meshes[i].Destroy();
+        }
 }
 
 void Model::ProcessNode(aiNode* Node, const aiScene* Scene)

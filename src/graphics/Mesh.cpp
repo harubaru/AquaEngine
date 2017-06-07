@@ -2,6 +2,11 @@
 
 Mesh::Mesh(Vertex* vertices, std::vector<GLuint> Indices) : DrawCount(Indices.size())
 {
+	if(vertices == nullptr) {
+		std::cout << "Mesh Loading Error: Vertices point to NULL." << std::endl;
+		return;
+	}
+
 	glGenVertexArrays(1, &m_VertexArrayObject);
 	glBindVertexArray(m_VertexArrayObject); // bind vao
 

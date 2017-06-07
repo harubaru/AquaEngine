@@ -3,7 +3,7 @@
 Mesh::Mesh(Vertex* vertices, std::vector<GLuint> Indices) : DrawCount(Indices.size())
 {
 	if(vertices == nullptr) {
-		std::cout << "Mesh Loading Error: Vertices point to NULL." << std::endl;
+		std::cout << "Mesh Error: Vertices point to NULL." << std::endl;
 		return;
 	}
 

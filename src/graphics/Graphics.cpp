@@ -8,7 +8,7 @@ Graphics::Graphics(Display& display)
 	glewExperimental = true;
 	GLenum code = glewInit();
 	if(code != GLEW_OK)
-		std::cout << "Error initializing GLEW: " << glewGetErrorString(code) << std::endl;
+		std::cout << "GLEW Error: " << glewGetErrorString(code) << std::endl;
 
 	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);

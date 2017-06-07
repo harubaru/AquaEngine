@@ -6,7 +6,7 @@ Model::Model(const std::string& FilePath)
         const aiScene* scene = importer.ReadFile(FilePath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
         if(!scene || (scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE) || !scene->mRootNode) {
-                std::cout << "Asset Importing Error: " << importer.GetErrorString() << std::endl;
+                std::cout << "Assimp Error: " << importer.GetErrorString() << std::endl;
                 MeshFail = true;
                 return;
         }

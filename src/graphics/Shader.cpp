@@ -9,7 +9,6 @@ std::string Shader::GetShaderSource(const std::string& ShaderPath)
 
 	if(!filestream.is_open())
 	{
-		std::cout << "File not found! Path: " << ShaderPath << std::endl;
 		Failed = true;
 	} else {
 		std::string line("");
@@ -43,7 +42,7 @@ GLuint Shader::CompileShader(const std::string& SourceCode, gl_shadertype shader
 	}
 
 	if(!glIsShader(shader)) {
-		std::cout << "Invalid shadertype!\n";
+		std::cout << "Shader Error: Shaders are not correct types.\n";
 		return 0;
 	}
 
@@ -57,7 +56,7 @@ GLuint Shader::CompileShader(const std::string& SourceCode, gl_shadertype shader
 	if (log_length > 0) {
 		GLchar infolog[log_length];
 		glGetShaderInfoLog(shader, log_length, NULL, infolog);
-		std::cout << "Shader failed to compile!\n" << infolog << std::endl;
+		std::cout << "Shader Error: Failed to compile.\n" << infolog << std::endl;
 	}
 	return shader;
 }
@@ -76,7 +75,7 @@ void Shader::LinkShaders(GLuint shader1, GLuint shader2)
 	if(log_length > 0) {
 		GLchar infolog[log_length];
 		glGetProgramInfoLog(ShaderProgram, log_length, NULL, infolog);
-		std::cout << "\nFailed to create Shader Program!\nError : \n" << infolog << std::endl;
+		std::cout << "Shader Error: Failed to link shader: \n" << infolog << std::endl;
 	}
 }
 

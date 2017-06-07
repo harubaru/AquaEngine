@@ -117,14 +117,19 @@ void Shader::SetProjection(const glm::mat4& Projection)
 	glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, "Projection"), 1, GL_FALSE, glm::value_ptr(Projection));
 }
 
-void Shader::SetCameraPos(const glm::vec3& CameraPos)
+void Shader::SetVec3(const std::string& uniform, const glm::vec3& v)
 {
-	glUniform3fv(glGetUniformLocation(ShaderProgram, "CameraPos"), 1, glm::value_ptr(CameraPos));
+	glUniform3fv(glGetUniformLocation(ShaderProgram, uniform.c_str()), 1, glm::value_ptr(v));
 }
 
-void Shader::SetQuadColor(const glm::vec4& Color)
+void Shader::SetFloat(const std::string& uniform, const float& f)
 {
-	glUniform4fv(glGetUniformLocation(ShaderProgram, "QuadColor"), 1, glm::value_ptr(Color));
+	glUniform1f(glGetUniformLocation(ShaderProgram, uniform.c_str()), f);
+}
+
+void Shader::SetMat4(const std::string& uniform, const glm::mat4& m)
+{
+	glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, uniform.c_str()), 1, GL_FALSE, glm::value_ptr(m));
 }
 
 void Shader::Bind()

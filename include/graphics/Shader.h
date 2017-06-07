@@ -31,8 +31,9 @@ public:
 	void SetView(const glm::mat4& View);
 	void SetProjection(const glm::mat4& Projection);
 
-	void SetCameraPos(const glm::vec3& CameraPos);
-	void SetQuadColor(const glm::vec4& Color);
+	void SetVec3(const std::string& uniform, const glm::vec3& v);
+	void SetFloat(const std::string& uniform, const float& f);
+	void SetMat4(const std::string& uniform, const glm::mat4& m);
 
 	void Bind();
 	void Unbind();

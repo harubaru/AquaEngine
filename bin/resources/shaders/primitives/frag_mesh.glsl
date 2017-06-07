@@ -8,6 +8,7 @@ layout (location = 0) out vec4 Color;
 
 uniform vec4 QuadColor;
 uniform vec3 CameraPos;
+uniform vec3 LightPos;
 uniform sampler2D sampler;
 
 void main()
@@ -19,7 +20,6 @@ void main()
 	vec3 Ambient = AmbientStrength * LightColor;
 
 	// Calculate Diffuse
-	vec3 LightPos = vec3(3.0, 4.0, -8.0);
 	vec3 Norm = normalize(Normal);
 	vec3 LightDirection = normalize(LightPos - FragPos);
 	float Diff = max(dot(Norm, LightDirection), 0.0);

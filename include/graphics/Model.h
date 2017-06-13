@@ -19,9 +19,11 @@ private:
 
 	bool MeshFail;
 public:
+	Model() {}
 	Model(const std::string& FilePath);
 	~Model();
 
+	void Load(const std::string& FilePath);
 	void Render();
 
 	std::string FilePath;

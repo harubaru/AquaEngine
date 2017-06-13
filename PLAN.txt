@@ -1,5 +1,5 @@
 TODO:
-Get GLFW up and running
+Get SDL2 up and running
 Do 2D Quad rendering
 Do 3D Object Rendering (3D OBJECT MUST BE LOADED FROM OBJ FILE)
 
@@ -12,8 +12,6 @@ obj.vert
 obj.frag
 
 bin/resources/shaders/lighting
-phong.vert
-phong.frag
 
 bin/resources/shaders/effects
 blur.vert

@@ -1,3 +1,6 @@
+#ifndef STB_IMAGE_H
+#define STB_IMAGE_H
+
 #ifndef STBI_NO_STDIO
 
 #if defined(_MSC_VER) && _MSC_VER >= 0x1400
@@ -36,7 +39,7 @@ extern stbi_uc *stbi_load_from_file  (FILE *f,                  int *x, int *y, 
 
 typedef struct
 {
-   int      (*read)  (void *user,char *data,int size);   // fill 'data' with 'size' bytes.  return number of bytes actually read 
+   int      (*read)  (void *user,char *data,int size);   // fill 'data' with 'size' bytes.  return number of bytes actually read
    void     (*skip)  (void *user,unsigned n);            // skip the next 'n' bytes
    int      (*eof)   (void *user);                       // returns nonzero if we are at end of file/data
 } stbi_io_callbacks;
@@ -50,7 +53,7 @@ extern stbi_uc *stbi_load_from_callbacks  (stbi_io_callbacks const *clbk, void *
    extern float *stbi_loadf            (char const *filename,   int *x, int *y, int *comp, int req_comp);
    extern float *stbi_loadf_from_file  (FILE *f,                int *x, int *y, int *comp, int req_comp);
    #endif
-   
+
    extern float *stbi_loadf_from_callbacks  (stbi_io_callbacks const *clbk, void *user, int *x, int *y, int *comp, int req_comp);
 
    extern void   stbi_hdr_to_ldr_gamma(float gamma);
@@ -71,7 +74,7 @@ extern int      stbi_is_hdr_from_file(FILE *f);
 
 // get a VERY brief reason for failure
 // NOT THREADSAFE
-extern const char *stbi_failure_reason  (void); 
+extern const char *stbi_failure_reason  (void);
 
 // free the loaded image -- this is just free()
 extern void     stbi_image_free      (void *retval_from_stbi_load);
@@ -131,6 +134,8 @@ extern void stbi_install_YCbCr_to_RGB(stbi_YCbCr_to_RGB_run func);
 #ifdef __cplusplus
 }
 #endif
+
+#endif // STB_IMAGE_H
 
 //
 //

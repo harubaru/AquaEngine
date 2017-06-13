@@ -8,6 +8,8 @@
 #include <graphics/Model.h>
 #include <graphics/Texture.h>
 #include <graphics/Camera.h>
+#include <graphics/Framebuffer.h>
+#include <graphics/Skybox.h>
 
 using namespace std;
 
@@ -32,6 +34,19 @@ int main(int argv, char** args)
 	Texture tex("./resources/textures/BrickWall.jpg");
 	Model cube("./resources/meshes/Cube.obj");
 
+	Shader skyboxshader("./resources/shaders/primitives/vert_skybox.glsl", "./resources/shaders/primitives/frag_skybox.glsl");
+
+	std::vector<std::string> Faces = {
+		"./resources/textures/skybox/miramar_rt.tga",
+		"./resources/textures/skybox/miramar_lf.tga",
+		"./resources/textures/skybox/miramar_up.tga",
+		"./resources/textures/skybox/miramar_dn.tga",
+		"./resources/textures/skybox/miramar_bk.tga",
+		"./resources/textures/skybox/miramar_ft.tga"
+	};
+
+	Skybox skybox(Faces, skyboxshader, cube);
+
 	while(!display.Close) {
 		Clock_TickBegin(&clock);
 		graphics.GetGLError();
@@ -50,13 +65,15 @@ int main(int argv, char** args)
 		shader.SetVec3("LightPos", glm::vec3(2.0, 2.0, -8.0));
 
 		display.GetSize(&Width, &Height);
-		camera.Update(glm::vec3(0, 0, -5), 70.0f, (float)Width / (float)Height, 0.1f, 100.0f);
+		camera.Update(glm::vec3(0, 0, -5), 70.0f, (float)Width / (float)Height, 1.0f, 100.0f);
 
 		tex.Bind(0);
 		cube.Render();
 		tex.Unbind();
 
 		shader.Unbind();
+
+		skybox.Draw(camera);
 
 		Clock_TickEnd(&clock);
 	}

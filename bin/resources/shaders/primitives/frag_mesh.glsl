@@ -16,7 +16,7 @@ void main()
 	vec3 LightColor = vec3(1.0, 1.0, 1.0);
 
 	// Calculate Ambient
-	float AmbientStrength = 0.1;
+	float AmbientStrength = 0.01;
 	vec3 Ambient = AmbientStrength * LightColor;
 
 	// Calculate Diffuse

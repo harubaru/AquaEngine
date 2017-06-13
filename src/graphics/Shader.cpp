@@ -81,13 +81,7 @@ void Shader::LinkShaders(GLuint shader1, GLuint shader2)
 
 Shader::Shader(const std::string& VertShaderFile, const std::string& FragShaderFile)
 {
-	std::string VertShaderSource = GetShaderSource(VertShaderFile);
-	std::string FragShaderSource = GetShaderSource(FragShaderFile);
-
-	VertShader = CompileShader(VertShaderSource, VERTEX_SHADER);
-	FragShader = CompileShader(FragShaderSource, FRAGMENT_SHADER);
-
-	LinkShaders(VertShader, FragShader);
+	Load(VertShaderFile, FragShaderFile);
 }
 
 Shader::~Shader()
@@ -99,6 +93,17 @@ Shader::~Shader()
 	glDeleteShader(FragShader);
 
 	glDeleteProgram(ShaderProgram);
+}
+
+void Shader::Load(const std::string& VertShaderFile, const std::string& FragShaderFile)
+{
+	std::string VertShaderSource = GetShaderSource(VertShaderFile);
+	std::string FragShaderSource = GetShaderSource(FragShaderFile);
+
+	VertShader = CompileShader(VertShaderSource, VERTEX_SHADER);
+	FragShader = CompileShader(FragShaderSource, FRAGMENT_SHADER);
+
+	LinkShaders(VertShader, FragShader);
 }
 
 void Shader::SetModel(const glm::mat4& Model)

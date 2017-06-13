@@ -2,6 +2,19 @@
 
 Model::Model(const std::string& FilePath)
 {
+        Load(FilePath);
+}
+
+Model::~Model()
+{
+        if(!MeshFail) {
+                for(uint32_t i = 0; i < MeshCount; i++)
+                        Meshes[i].Destroy();
+        }
+}
+
+void Model::Load(const std::string& FilePath)
+{
         Assimp::Importer importer;
         const aiScene* scene = importer.ReadFile(FilePath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
@@ -18,14 +31,6 @@ Model::Model(const std::string& FilePath)
         Meshes.reserve(MeshCount + 1);
 
         this->ProcessNode(scene->mRootNode, scene);
-}
-
-Model::~Model()
-{
-        if(!MeshFail) {
-                for(uint32_t i = 0; i < MeshCount; i++)
-                        Meshes[i].Destroy();
-        }
 }
 
 void Model::ProcessNode(aiNode* Node, const aiScene* Scene)

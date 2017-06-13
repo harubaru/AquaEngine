@@ -9,10 +9,14 @@ layout (location = 0) out vec4 Color;
 uniform vec4 QuadColor;
 uniform vec3 CameraPos;
 uniform vec3 LightPos;
-uniform sampler2D sampler;
+uniform sampler2D sample;
 
 void main()
 {
+	vec4 Texel = texture(sample, TexCoord);
+	if(Texel.a < 0.1)
+		discard;
+
 	vec3 LightColor = vec3(1.0, 1.0, 1.0);
 
 	// Calculate Ambient
@@ -32,7 +36,7 @@ void main()
 	float Spec = pow(max(dot(ViewDirection, ReflectDirection), 0.0), 32);
 	vec3 Specular = vec3(SpecularStrength * Spec * LightColor);
 
-	vec4 ProcColor = vec4(Ambient + Diffuse + Specular, 1.0) * texture2D(sampler, TexCoord);
+	vec4 ProcColor = vec4(Ambient + Diffuse + Specular, 1.0) * Texel;
 
 	Color = ProcColor;
 }

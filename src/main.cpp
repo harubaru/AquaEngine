@@ -65,7 +65,7 @@ int main(int argv, char** args)
 		shader.SetVec3("LightPos", glm::vec3(2.0, 2.0, -8.0));
 
 		display.GetSize(&Width, &Height);
-		camera.Update(glm::vec3(0, 0, -5), 70.0f, (float)Width / (float)Height, 1.0f, 100.0f);
+		camera.Update(0.0, 0.0, glm::vec3(0, 0, -5), 70.0f, (float)Width / (float)Height, 1.0f, 100.0f);
 
 		tex.Bind(0);
 		cube.Render();

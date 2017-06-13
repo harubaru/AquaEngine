@@ -11,6 +11,8 @@
 #include <graphics/Display.h>
 #include <graphics/Shader.h>
 
+struct hardwareinfo_t;
+
 class Graphics
 {
 private:
@@ -21,6 +23,7 @@ public:
 	void InitWindow(const char* title, int w, int h, uint32_t sdl_flags);
 	void Clear(float, float, float);
 	void GetGLError();
+	std::string GetVendor();
 };
 
 #endif

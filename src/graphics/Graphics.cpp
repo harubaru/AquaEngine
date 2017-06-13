@@ -1,5 +1,12 @@
 #include <graphics/Graphics.h>
 
+struct hardwareinfo_t {
+	std::string Vendor;
+	std::string Renderer;
+	std::string Version;
+	std::string SL_Version;
+};
+
 Graphics::Graphics(Display& display)
 {
 	m_Display = &display;
@@ -40,4 +47,16 @@ void Graphics::GetGLError()
 		}
 		std::cout << ErrorStr << std::endl; // print formatted error
 	}
+}
+
+hardwareinfo_t GetHardwareInfo()
+{
+	hardwareinfo_t ret = {
+		.Vendor = std::string((const char*)glGetString(GL_VENDOR)),
+		.Renderer = std::string((const char*)glGetString(GL_RENDERER)),
+		.Version = std::string((const char*)glGetString(GL_VERSION)),
+		.SL_Version = std::string((const char*)glGetString(GL_SHADING_LANGUAGE_VERSION))
+	};
+
+	return ret;
 }

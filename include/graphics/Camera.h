@@ -11,13 +11,9 @@ private:
 	glm::vec3 m_forward;
 	glm::vec3 m_up;
 public:
-	Camera(const glm::vec3& pos, float fov, float aspect, float zNear, float zFar)
-	{
-		m_Projection = glm::perspective(fov, aspect, zNear, zFar);
-		m_pos = pos;
-		m_forward = glm::vec3(0, 0, 1);
-		m_up = glm::vec3(0, 1, 0);
-	}
+	Camera(const glm::vec3& pos, float fov, float aspect, float zNear, float zFar);
+	void Update(float yaw, float pitch, const glm::vec3& pos, float fov, float aspect, float zNear, float zFar);
+	void SetView(float yaw, float pitch);
 
 	inline glm::mat4 GetView()
 	{
@@ -32,14 +28,6 @@ public:
 	inline glm::vec3 GetPos()
 	{
 		return m_pos;
-	}
-
-	inline void Update(const glm::vec3& pos, float fov, float aspect, float zNear, float zFar)
-	{
-		m_Projection = glm::perspective(fov, aspect, zNear, zFar);
-		m_pos = pos;
-		m_forward = glm::vec3(0, 0, 1);
-		m_up = glm::vec3(0, 1, 0);
 	}
 };
 

@@ -31,7 +31,7 @@ int main(int argv, char** args)
 
 	Shader shader("./resources/shaders/primitives/vert_mesh.glsl", "./resources/shaders/primitives/frag_mesh.glsl");
 	MeshTransform mt(glm::vec3(0, 0, 0), glm::vec3(0, 0, 1), glm::vec3(1, 1, 1));
-	Texture tex("./resources/textures/BrickWall.jpg");
+	Texture tex("./resources/textures/BrickWall.jpg", GL_TEXTURE_2D);
 	Model cube("./resources/meshes/Cube.obj");
 
 	Shader skyboxshader("./resources/shaders/primitives/vert_skybox.glsl", "./resources/shaders/primitives/frag_skybox.glsl");

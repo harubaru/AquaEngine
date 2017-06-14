@@ -8,9 +8,10 @@
 
 class Texture {
 private:
-	GLuint m_texHandle;
+	GLuint mTexHandle;
+	GLenum mTarget;
 public:
-	Texture(std::string FilePath);
+	Texture(std::string FilePath, GLenum Target);
 	Texture(){}
 	~Texture();
 

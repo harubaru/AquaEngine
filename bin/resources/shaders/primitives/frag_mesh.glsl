@@ -20,7 +20,7 @@ void main()
 	vec3 LightColor = vec3(1.0, 1.0, 1.0);
 
 	// Calculate Ambient
-	float AmbientStrength = 0.01;
+	float AmbientStrength = 0.05;
 	vec3 Ambient = AmbientStrength * LightColor;
 
 	// Calculate Diffuse
@@ -33,7 +33,9 @@ void main()
 	float SpecularStrength = 1;
 	vec3 ViewDirection = normalize(CameraPos - FragPos);
 	vec3 ReflectDirection = reflect(-LightDirection, Norm);
-	float Spec = pow(max(dot(ViewDirection, ReflectDirection), 0.0), 32);
+	float Spec = 0.0;
+	vec3 Halfway = normalize(LightDirection + ViewDirection);
+	Spec = pow(max(dot(Norm, Halfway), 0.0), 32.0);
 	vec3 Specular = vec3(SpecularStrength * Spec * LightColor);
 
 	vec4 ProcColor = vec4(Ambient + Diffuse + Specular, 1.0) * Texel;

@@ -37,11 +37,15 @@ void Texture::LoadFile(std::string FilePath)
 	glGenTextures(1, &mTexHandle);
 	glBindTexture(mTarget, mTexHandle);
 
-	glTexImage2D(mTarget, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
+	if(comp == 3) {
+		glTexImage2D(mTarget, 0, GL_SRGB, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
+	} else if (comp == 4) {
+		glTexImage2D(mTarget, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
+	}
 
 	glTexParameteri(mTarget, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(mTarget, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	
+
 	glTexParameteri(mTarget, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(mTarget, GL_TEXTURE_WRAP_T, GL_REPEAT);
 

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <util/Clock.h>
+#include <cmath>
 #include <graphics/Graphics.h>
 #include <graphics/Mesh.h>
 #include <graphics/MeshTransform.h>
@@ -91,11 +92,17 @@ int main(int argv, char** args)
 
 	mt.Translate(glm::vec3(0, -0.25, -0));
 
+	float x = 5;
+	float y = -10;
+	float counter = 0.0;
 	while(!display.Close) {
 		Clock_TickBegin(&clock);
 		graphics.GetGLError();
 
-		camera.Update(20.0, -20.0, glm::vec3(-9, 3, -3), 70.0f, (float)Width / (float)Height, 0.1f, 100.0f);
+		x = sin(counter * 2);
+		counter += 0.01f;
+
+		camera.Update(90.0, -30.0, glm::vec3(x, 3, y), 70.0f, (float)Width / (float)Height, 0.1f, 100.0f);
 
 		display.Update();
 		graphics.Clear(0.0, 0.0, 0.0);
@@ -119,7 +126,7 @@ int main(int argv, char** args)
 
 		shader.Unbind();
 
-	//	skybox.Draw(camera);
+//		skybox.Draw(camera);
 
 		Clock_TickEnd(&clock);
 	}

@@ -13,7 +13,6 @@ void Camera::Update(float yaw, float pitch, const glm::vec3& pos, float fov, flo
         SetView(yaw, pitch);
         m_Projection = glm::perspective(fov, aspect, zNear, zFar);
         m_pos = pos;
-        m_forward = glm::vec3(0, 0, 1);
         m_up = glm::vec3(0, 1, 0);
 }
 

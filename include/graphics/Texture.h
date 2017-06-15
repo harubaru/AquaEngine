@@ -19,6 +19,8 @@ public:
 
 	void Bind(GLuint texUnit);
 	void Unbind();
+
+	inline GLuint GetTexHandle() { return mTexHandle; }
 };
 
 #endif

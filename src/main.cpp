@@ -31,7 +31,8 @@ int main(int argv, char** args)
 
 	Shader shader("./resources/shaders/primitives/vert_mesh.glsl", "./resources/shaders/primitives/frag_mesh.glsl");
 	MeshTransform mt(glm::vec3(0, 0, 0), glm::vec3(0, 0, 1), glm::vec3(1, 1, 1));
-	Texture tex("./resources/textures/BrickWall.jpg", GL_TEXTURE_2D);
+	Texture diff("./resources/textures/BrickWallDiffuseMap.jpg", GL_TEXTURE_2D);
+	Texture spec("./resources/textures/BrickWallSpecularMap.png", GL_TEXTURE_2D);
 	Model cube("./resources/meshes/Cube.obj");
 
 	Shader skyboxshader("./resources/shaders/primitives/vert_skybox.glsl", "./resources/shaders/primitives/frag_skybox.glsl");
@@ -47,6 +48,30 @@ int main(int argv, char** args)
 
 	Skybox skybox(Faces, skyboxshader, cube);
 
+	shader.Bind();
+	// material configuration
+	shader.SetInt("material.diffuse", 0);
+	shader.SetInt("material.specular", 1);
+	shader.SetFloat("material.shininess", 32.0f);
+
+	// directional light configuration
+	shader.SetVec3("dirlight.direction", glm::vec3(0.0f, 1.0f, 5.0f));
+	shader.SetVec3("dirlight.ambient", glm::vec3(0.5f, 0.6f, 0.7f));
+	shader.SetVec3("dirlight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
+	shader.SetVec3("dirlight.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+
+	// pointlight configuration
+	shader.SetVec3("PointLights[0].position", glm::vec3(0.0f, 1.0f, 5.0f));
+	shader.SetVec3("PointLights[0].ambient", glm::vec3(0.05, 0.05, 0.05));
+	shader.SetVec3("PointLights[0].diffuse", glm::vec3(0.8, 0.8, 0.8));
+	shader.SetVec3("PointLights[0].specular", glm::vec3(1.0, 1.0, 1.0));
+	shader.SetFloat("PointLights[0].constant", 2.0);
+	shader.SetFloat("PointLights[0].linear", 0.09);
+	shader.SetFloat("PointLights[0].quadratic", 0.032);
+
+	shader.SetInt("NumLights", 1);
+	shader.Unbind();
+
 	while(!display.Close) {
 		Clock_TickBegin(&clock);
 		graphics.GetGLError();
@@ -54,7 +79,7 @@ int main(int argv, char** args)
 		display.Update();
 		graphics.Clear(0.0, 0.0, 0.0);
 
-		mt.Rotate(glm::vec3(0, 1, 0), (float)clock.DeltaTime * 1);
+		mt.Rotate(glm::vec3(1, 1, 0), (float)clock.DeltaTime * 1);
 
 		shader.Bind();
 		shader.SetModel(mt.GetModel());
@@ -62,14 +87,15 @@ int main(int argv, char** args)
 		shader.SetView(camera.GetView());
 
 		shader.SetVec3("CameraPos", camera.GetPos());
-		shader.SetVec3("LightPos", glm::vec3(2.0, 2.0, -8.0));
 
 		display.GetSize(&Width, &Height);
-		camera.Update(0.0, 0.0, glm::vec3(0, 0, -5), 70.0f, (float)Width / (float)Height, 1.0f, 100.0f);
+		camera.Update(0.0, 0.0, glm::vec3(0, 0, -5), 70.0f, (float)Width / (float)Height, 0.01f, 100.0f);
 
-		tex.Bind(0);
+		diff.Bind(0);
+		spec.Bind(1);
 		cube.Render();
-		tex.Unbind();
+		spec.Unbind();
+		diff.Unbind();
 
 		shader.Unbind();
 

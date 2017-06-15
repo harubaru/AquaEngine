@@ -36,6 +36,7 @@ public:
 
 	void SetVec3(const std::string& uniform, const glm::vec3& v);
 	void SetFloat(const std::string& uniform, const float& f);
+	void SetInt(const std::string& uniform, const int& i);
 	void SetMat4(const std::string& uniform, const glm::mat4& m);
 
 	void Bind();

@@ -1,24 +1,21 @@
 #ifndef AQUAGL_FRAMEBUFFER_H
 #define AQUAGL_FRAMEBUFFER_H
 
+#include <iostream>
 #include <GL/glew.h>
 
 class Framebuffer {
         GLuint mFramebuffer;
-        GLuint mFramebufferData;
+        GLuint mFramebufferTex;
         GLuint mRenderbuffer;
 public:
-        Framebuffer();
+        Framebuffer(unsigned int width, unsigned int height);
         ~Framebuffer();
 
-        void Draw(int SrcX0, int SrcY0, int SrcX1, int SrcY1, int DstX0, int DstY0, int DstX1, int DstY1);
         void Bind();
         void Unbind();
-        void Begin();
-        void End();
-        void AttachTexture(GLenum textarget);
-        void GenerateMultisample(int samples, int width, int height);
-        GLenum GetFramebufferStatus();
+        void BindTex();
+        void UnbindTex();
 };
 
 #endif

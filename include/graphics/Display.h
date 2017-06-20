@@ -1,13 +1,10 @@
-#ifndef AQUAGL_RENDERER_H
-#define AQUAGL_RENDERER_H
+#ifndef AQUAGL_DISPLAY_H
+#define AQUAGL_DISPLAY_H
 
 #include <string>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
-
-/*  Handles Input
- */
 
 class Display
 {

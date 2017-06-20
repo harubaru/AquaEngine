@@ -10,7 +10,7 @@ Framebuffer::Framebuffer(unsigned int width, unsigned int height)
         glGenTextures(1, &mFramebufferTex);
         glBindTexture(GL_TEXTURE_2D, mFramebufferTex);
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -26,6 +26,13 @@ Framebuffer::Framebuffer(unsigned int width, unsigned int height)
                 std::cout << "Framebuffer Error: Framebuffer is not complete." << std::endl;
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+        FBShader.Load("resources/shaders/framebuffer/vert_fb.glsl", "resources/shaders/framebuffer/frag_fb.glsl");
+        FBQuad.Load(FBQuadVertices, FBQuadIndices);
+
+        FBShader.Bind();
+        FBShader.SetInt("tex", 0);
+        FBShader.Unbind();
 }
 
 Framebuffer::~Framebuffer()
@@ -47,10 +54,23 @@ void Framebuffer::Unbind()
 
 void Framebuffer::BindTex()
 {
+        glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, mFramebufferTex);
 }
 
 void Framebuffer::UnbindTex()
 {
         glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Framebuffer::Draw()
+{
+        glDisable(GL_DEPTH_TEST);
+        glClear(GL_COLOR_BUFFER_BIT);
+        FBShader.Bind();
+        BindTex();
+        FBQuad.Draw();
+        UnbindTex();
+        FBShader.Unbind();
+        glEnable(GL_DEPTH_TEST);
 }

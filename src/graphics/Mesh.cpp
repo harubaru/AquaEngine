@@ -1,6 +1,16 @@
 #include <graphics/Mesh.h>
 
+Mesh::Mesh() // Default Constructor
+{
+
+}
+
 Mesh::Mesh(Vertex* vertices, std::vector<GLuint> Indices) : DrawCount(Indices.size())
+{
+	Load(vertices, Indices);
+}
+
+void Mesh::Load(Vertex* vertices, std::vector<uint32_t> Indices)
 {
 	if(vertices == nullptr) {
 		std::cout << "Mesh Error: Vertices point to NULL." << std::endl;
@@ -26,11 +36,6 @@ Mesh::Mesh(Vertex* vertices, std::vector<GLuint> Indices) : DrawCount(Indices.si
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)24);
 
 	glBindVertexArray(0); // unbind vao
-}
-
-Mesh::~Mesh()
-{
-
 }
 
 void Mesh::Destroy()

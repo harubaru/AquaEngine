@@ -17,6 +17,7 @@ public:
 
 	bool Close;
 
+	void DestroyWindow();
 	void Update();
 	void GetSize(int* w, int* h);
 

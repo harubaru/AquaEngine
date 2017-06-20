@@ -30,6 +30,11 @@ Display::~Display()
 	SDL_DestroyWindow(m_Window);
 }
 
+void Display::DestroyWindow()
+{
+	SDL_DestroyWindow(m_Window);
+}
+
 void Display::Update()
 {
 	SDL_GL_SetSwapInterval(1);

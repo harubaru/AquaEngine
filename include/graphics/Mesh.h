@@ -29,7 +29,9 @@ private:
 	GLuint m_VertexArrayBuffer;
 public:
 	Mesh(Vertex* vertices, std::vector<uint32_t> Indices);
-	~Mesh();
+	Mesh();
+
+	void Load(Vertex* vertices, std::vector<uint32_t> Indices);
 
 	void Destroy();
 	void Draw();

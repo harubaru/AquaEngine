@@ -12,6 +12,8 @@
 #include <graphics/Framebuffer.h>
 #include <graphics/Skybox.h>
 
+#undef main
+
 using namespace std;
 
 int main(int argv, char** args)
@@ -92,6 +94,8 @@ int main(int argv, char** args)
 
 	mt.Translate(glm::vec3(0, -0.25, -0));
 
+	Framebuffer fb(Width, Height);
+
 	float x = 5;
 	float y = -10;
 	float counter = 0.0;
@@ -104,10 +108,8 @@ int main(int argv, char** args)
 
 		camera.Update(90.0, -30.0, glm::vec3(x, 3, y), 70.0f, (float)Width / (float)Height, 0.1f, 100.0f);
 
-		display.Update();
+		fb.Bind();
 		graphics.Clear(0.0, 0.0, 0.0);
-
-//		mt.Rotate(glm::vec3(1, 1, 0), (float)clock.DeltaTime * 1);
 
 		shader.Bind();
 		shader.SetModel(mt.GetModel());
@@ -126,7 +128,12 @@ int main(int argv, char** args)
 
 		shader.Unbind();
 
+		fb.Unbind();
+		fb.Draw();
+
 //		skybox.Draw(camera);
+
+		display.Update();
 
 		Clock_TickEnd(&clock);
 	}

@@ -9,12 +9,13 @@ class MeshTransform {
 private:
 	glm::vec3 m_Pos, m_Rot, m_Scale;
 	glm::mat4 Model;
+	float m_Angle;
 public:
 	MeshTransform(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale) 
-		: m_Pos(pos), m_Rot(rot), m_Scale(scale) {}
+		: m_Pos(pos), m_Rot(rot), m_Scale(scale), m_Angle(0.0) {}
 
 	MeshTransform() 
-		: m_Pos(glm::vec3(0.0, 0.0, 0.0)), m_Rot(glm::vec3(0.0, 0.0, 1.0)), m_Scale(glm::vec3(1.0, 1.0, 1.0)) {}
+		: m_Pos(glm::vec3(0.0, 0.0, 0.0)), m_Rot(glm::vec3(0.0, 0.0, 1.0)), m_Scale(glm::vec3(1.0, 1.0, 1.0)), m_Angle(0.0) {}
 
 	inline glm::vec3 GetPos()   { return m_Pos; }
 	inline glm::vec3 GetRot()   { return m_Rot; }

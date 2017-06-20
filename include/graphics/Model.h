@@ -9,6 +9,8 @@
 #include <assimp/postprocess.h>
 #include <graphics/Mesh.h>
 #include <graphics/Texture.h>
+#include <graphics/Shader.h>
+#include <graphics/MeshTransform.h>
 
 class Model {
 private:
@@ -25,6 +27,8 @@ public:
 
 	void Load(const std::string& FilePath);
 	void Render();
+
+	MeshTransform Transform;
 
 	std::string FilePath;
 	uint32_t MeshCount;

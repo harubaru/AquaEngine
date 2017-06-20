@@ -54,40 +54,40 @@ int main(int argv, char** args)
 
 	shader.Bind();
 	// material configuration
-	shader.SetInt("material.diffuse", 0);
-	shader.SetInt("material.specular", 1);
+	shader.SetInt("material.diffuse", 0); // tex 1
+	shader.SetInt("material.specular", 1); // tex 2
 	shader.SetFloat("material.shininess", 32.0f);
 
 	// directional light configuration
 	shader.SetVec3("dirlight.direction", glm::vec3(0.0f, 1.0f, 5.0f));
 	shader.SetVec3("dirlight.ambient", glm::vec3(0.05f, 0.06f, 0.07f));
 	shader.SetVec3("dirlight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
-	shader.SetVec3("dirlight.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+	shader.SetVec3("dirlight.specular", glm::vec3(0.5f, 0.0f, 0.0f));
 
 	// pointlight configuration
-	shader.SetVec3("PointLights[0].position", glm::vec3(0.0f, 1.0f, 0.0f));
+	shader.SetVec3("PointLights[0].position", glm::vec3(2.0f, 1.0f, 0.0f));
 	shader.SetVec3("PointLights[0].ambient", glm::vec3(0.05, 0.00, 0.00));
-	shader.SetVec3("PointLights[0].diffuse", glm::vec3(0.8, 0.0, 0.0));
+	shader.SetVec3("PointLights[0].diffuse", glm::vec3(0.25, 0.0, 0.0));
 	shader.SetVec3("PointLights[0].specular", glm::vec3(1.0, 0.0, 0.0));
-	shader.SetFloat("PointLights[0].constant", 2.0);
-	shader.SetFloat("PointLights[0].linear", 0.09);
-	shader.SetFloat("PointLights[0].quadratic", 0.032);
+	shader.SetFloat("PointLights[0].constant", 1.0);
+	shader.SetFloat("PointLights[0].linear", 0.07);
+	shader.SetFloat("PointLights[0].quadratic", 0.017);
 
-	shader.SetVec3("PointLights[1].position", glm::vec3(2.0f, 1.0f, 0.0f));
+	shader.SetVec3("PointLights[1].position", glm::vec3(0.0f, 1.0f, 0.0f));
 	shader.SetVec3("PointLights[1].ambient", glm::vec3(0.0, 0.05, 0.0));
-	shader.SetVec3("PointLights[1].diffuse", glm::vec3(0.0, 0.8, 0.0));
+	shader.SetVec3("PointLights[1].diffuse", glm::vec3(0., 0.25, 0.0));
 	shader.SetVec3("PointLights[1].specular", glm::vec3(0.0, 1.0, 0.0));
-	shader.SetFloat("PointLights[1].constant", 2.0);
-	shader.SetFloat("PointLights[1].linear", 0.09);
-	shader.SetFloat("PointLights[1].quadratic", 0.032);
+	shader.SetFloat("PointLights[1].constant", 1.0);
+	shader.SetFloat("PointLights[1].linear", 0.07);
+	shader.SetFloat("PointLights[1].quadratic", 0.017);
 
 	shader.SetVec3("PointLights[2].position", glm::vec3(-2.0f, 1.0f, 0.0f));
 	shader.SetVec3("PointLights[2].ambient", glm::vec3(0.0, 0.0, 0.05));
-	shader.SetVec3("PointLights[2].diffuse", glm::vec3(0.0, 0.0, 0.8));
+	shader.SetVec3("PointLights[2].diffuse", glm::vec3(0.0, 0.0, 0.25));
 	shader.SetVec3("PointLights[2].specular", glm::vec3(0.0, 0.0, 1.0));
-	shader.SetFloat("PointLights[2].constant", 2.0);
-	shader.SetFloat("PointLights[2].linear", 0.09);
-	shader.SetFloat("PointLights[2].quadratic", 0.032);
+	shader.SetFloat("PointLights[2].constant", 1.0);
+	shader.SetFloat("PointLights[2].linear", 0.07);
+	shader.SetFloat("PointLights[2].quadratic", 0.017);
 
 	shader.SetInt("NumLights", 3);
 	shader.Unbind();

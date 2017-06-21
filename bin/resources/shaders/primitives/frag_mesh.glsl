@@ -71,7 +71,7 @@ void main()
 	vec3 norm = normalize(Normal);
 	vec3 viewdir = normalize(CameraPos - FragPos);
 
-//	vec3 result = CalcDirLight(dirlight, norm, viewdir);
+	//vec3 result = CalcDirLight(dirlight, norm, viewdir);
 	vec3 result;
 
 	for(int i = 0; i < NumLights; i++)
@@ -112,7 +112,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragpos, vec3 viewdir)
 
 	//attenuation
 	float distance = length(light.position - fragpos);
-	float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+	float attenuation = 1.0 / (distance * distance);
 
 	vec3 ambient = light.ambient * vec3(texture(material.diffuse, TexCoord));
 	vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, TexCoord));
@@ -138,7 +138,7 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragpos, vec3 viewdir)
 
 	// attenuation
 	float distance = length(light.position - fragpos);
-	float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+	float attenuation = 1.0 / (distance * distance);
 
 	// intensity
 	float theta = dot(LightDirection, normalize(-light.direction));

@@ -28,7 +28,7 @@ Framebuffer::Framebuffer(unsigned int width, unsigned int height)
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
         FBShader.Load("resources/shaders/framebuffer/vert_fb.glsl", "resources/shaders/framebuffer/frag_fb.glsl");
-        FBQuad.Load(FBQuadVertices, FBQuadIndices);
+        FBQuad.Load(FBQuadVertices, FBQuadIndices, FBQuadIndices.size());
 
         FBShader.Bind();
         FBShader.SetInt("tex", 0);

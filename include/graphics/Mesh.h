@@ -28,10 +28,12 @@ private:
 	GLuint m_VertexArrayObject;
 	GLuint m_VertexArrayBuffer;
 public:
-	Mesh(Vertex* vertices, std::vector<uint32_t> Indices);
+	Mesh(Vertex* vertices, const std::vector<uint32_t>& Indices);
+	Mesh(Vertex* vertices, const std::vector<uint32_t>& Indices, size_t drawcount);
 	Mesh();
 
-	void Load(Vertex* vertices, std::vector<uint32_t> Indices);
+	void Load(Vertex* vertices, const std::vector<uint32_t>& Indices);
+	void Load(Vertex* vertices, const std::vector<uint32_t>& Indices, size_t drawcount);
 
 	void Destroy();
 	void Draw();

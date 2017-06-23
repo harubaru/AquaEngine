@@ -50,7 +50,7 @@ void Graphics::GetGLError()
 	}
 }
 
-hardwareinfo_t GetHardwareInfo()
+hardwareinfo_t Graphics::GetHardwareInfo()
 {
 	hardwareinfo_t ret = {
 		.Vendor = std::string((const char*)glGetString(GL_VENDOR)),

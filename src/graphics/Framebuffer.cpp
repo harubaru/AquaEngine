@@ -2,6 +2,16 @@
 
 Framebuffer::Framebuffer(unsigned int width, unsigned int height)
 {
+        Load(width, height);
+}
+
+Framebuffer::~Framebuffer()
+{
+        Destroy();
+}
+
+void Framebuffer::Load(unsigned int width, unsigned int height)
+{
         // Generate Framebuffer
         glGenFramebuffers(1, &mFramebuffer);
         glBindFramebuffer(GL_FRAMEBUFFER, mFramebuffer);
@@ -35,11 +45,17 @@ Framebuffer::Framebuffer(unsigned int width, unsigned int height)
         FBShader.Unbind();
 }
 
-Framebuffer::~Framebuffer()
+void Framebuffer::Destroy()
 {
         glDeleteTextures(1, &mFramebufferTex);
         glDeleteRenderbuffers(1, &mRenderbuffer);
         glDeleteFramebuffers(1, &mFramebuffer);
+}
+
+void Framebuffer::Resize(unsigned int width, unsigned int height)
+{
+        Destroy();
+        Load(width, height);
 }
 
 void Framebuffer::Bind()

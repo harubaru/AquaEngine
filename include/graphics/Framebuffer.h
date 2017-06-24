@@ -33,6 +33,10 @@ public:
         Framebuffer(unsigned int width, unsigned int height);
         ~Framebuffer();
 
+        void Load(unsigned int width, unsigned int height);
+        void Destroy();
+        void Resize(unsigned int width, unsigned int height);
+
         void Bind();
         void Unbind();
 

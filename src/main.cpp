@@ -93,7 +93,7 @@ int main(int argv, char** args)
 	float x = 5;
 	float y = -10;
 	float counter = 0.0;
-	while(!InputHandler.m_WindowClose) {
+	while(InputHandler.m_WindowClose == false) {
 		Clock_TickBegin(&clock);
 		Clock_TickEnd(&clock);
 		graphics.GetGLError();

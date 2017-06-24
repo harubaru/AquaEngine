@@ -1,5 +1,5 @@
-#ifndef AQUAGL_MESHTRANSFORM_H
-#define AQUAGL_MESHTRANSFORM_H
+#ifndef AQUAENGINE_GRAPHICS_MESHTRANSFORM_H
+#define AQUAENGINE_GRAPHICS_MESHTRANSFORM_H
 
 #include <iostream>
 #include <graphics/glm/glm.hpp>

@@ -1,5 +1,5 @@
-#ifndef AQUAGL_TEXTURE_H
-#define AQUAGL_TEXTURE_H
+#ifndef AQUAENGINE_GRAPHICS_TEXTURE_H
+#define AQUAENGINE_GRAPHICS_TEXTURE_H
 
 #include <iostream>
 #include <string>

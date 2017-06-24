@@ -1,5 +1,5 @@
-#ifndef AQUAGL_MODEL_H
-#define AQUAGL_MODEL_H
+#ifndef AQUAENGINE_GRAPHICS_MODEL_H
+#define AQUAENGINE_GRAPHICS_MODEL_H
 
 #include <iostream>
 #include <string>

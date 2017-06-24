@@ -24,7 +24,7 @@ int main(int argv, char** args)
 	Clock clock;
 	Clock_Initialize(&clock);
 
-	Display display(1280, 800, "AquaGL", SDL_WINDOW_RESIZABLE);
+	Display display(1280, 800, "AquaEngine", SDL_WINDOW_RESIZABLE);
 	Graphics graphics(display);
 
 	int Width, Height;

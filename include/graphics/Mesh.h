@@ -1,5 +1,5 @@
-#ifndef AQUAGL_MESH_H
-#define AQUAGL_MESH_H
+#ifndef AQUAENGINE_GRAPHICS_MESH_H
+#define AQUAENGINE_GRAPHICS_MESH_H
 
 #include <iostream>
 #include <string>

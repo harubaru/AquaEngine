@@ -1,5 +1,5 @@
-#ifndef AQUAGL_SHADER_H
-#define AQUAGL_SHADER_H
+#ifndef AQUAENGINE_GRAPHICS_SHADER_H
+#define AQUAENGINE_GRAPHICS_SHADER_H
 
 #include <iostream>
 #include <string>

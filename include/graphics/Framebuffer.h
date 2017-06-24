@@ -1,5 +1,5 @@
-#ifndef AQUAGL_FRAMEBUFFER_H
-#define AQUAGL_FRAMEBUFFER_H
+#ifndef AQUAENGINE_GRAPHICS_FRAMEBUFFER_H
+#define AQUAENGINE_GRAPHICS_FRAMEBUFFER_H
 
 #include <iostream>
 #include <vector>

@@ -1,5 +1,5 @@
-#ifndef AQUAGL_CAMERA_H
-#define AQUAGL_CAMERA_H
+#ifndef AQUAENGINE_GRAPHICS_CAMERA_H
+#define AQUAENGINE_GRAPHICS_CAMERA_H
 
 #include <graphics/glm/glm.hpp>
 #include <graphics/glm/gtx/transform.hpp>

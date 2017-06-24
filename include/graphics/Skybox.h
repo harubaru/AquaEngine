@@ -1,5 +1,5 @@
-#ifndef AQUAGL_SKYBOX_H
-#define AQUAGL_SKYBOX_H
+#ifndef AQUAENGINE_GRAPHICS_SKYBOX_H
+#define AQUAENGINE_GRAPHICS_SKYBOX_H
 
 #include <graphics/Cubemap.h>
 #include <graphics/Camera.h>

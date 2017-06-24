@@ -1,5 +1,5 @@
-#ifndef AQUAGL_CLOCK_H
-#define AQUAGL_CLOCK_H
+#ifndef AQUAENGINE_UTIL_CLOCK_H
+#define AQUAENGINE_UTIL_CLOCK_H
 
 #ifdef __cplusplus
 extern "C" {

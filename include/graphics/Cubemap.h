@@ -1,5 +1,5 @@
-#ifndef AQUAGL_CUBEMAP_H
-#define AQUAGL_CUBEMAP_H
+#ifndef AQUAENGINE_GRAPHICS_CUBEMAP_H
+#define AQUAENGINE_GRAPHICS_CUBEMAP_H
 
 #include <vector>
 #include <string>

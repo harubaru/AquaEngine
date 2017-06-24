@@ -1,5 +1,5 @@
-#ifndef AQUA2D_GRAPHICS_H
-#define AQUA2D_GRAPHICS_H
+#ifndef AQUAENGINE_GRAPHICS_GRAPHICS_H
+#define AQUAENGINE_GRAPHICS_GRAPHICS_H
 
 #include <iostream>
 #include <string>

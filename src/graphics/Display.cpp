@@ -39,12 +39,6 @@ void Display::Update()
 {
 	SDL_GL_SetSwapInterval(1);
 	SDL_GL_SwapWindow(m_Window);
-
-	while(SDL_PollEvent(&m_InputEvent)) {
-		//TODO: Key Input Too!
-		if(m_InputEvent.type == SDL_QUIT)
-			Close = true;
-	}
 }
 
 void Display::GetSize(int* w, int* h)

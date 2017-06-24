@@ -1,0 +1,1 @@
+OBJS:= $(OBJS) ./src/core/Input.o

@@ -12,6 +12,8 @@
 #include <graphics/Framebuffer.h>
 #include <graphics/Skybox.h>
 
+#include <core/Input.h>
+
 #undef main
 
 using namespace std;
@@ -26,6 +28,7 @@ int main(int argv, char** args)
 
 	Display display(1280, 800, "AquaEngine", SDL_WINDOW_RESIZABLE);
 	Graphics graphics(display);
+	Input InputHandler;
 
 	int Width, Height;
 	display.GetSize(&Width, &Height);
@@ -90,8 +93,9 @@ int main(int argv, char** args)
 	float x = 5;
 	float y = -10;
 	float counter = 0.0;
-	while(!display.Close) {
+	while(!InputHandler.m_WindowClose) {
 		Clock_TickBegin(&clock);
+		Clock_TickEnd(&clock);
 		graphics.GetGLError();
 
 		x = sin(counter * 2);
@@ -124,9 +128,8 @@ int main(int argv, char** args)
 
 //		skybox.Draw(camera);
 
+		InputHandler.Update();
 		display.Update();
-
-		Clock_TickEnd(&clock);
 	}
 
 	return 0;

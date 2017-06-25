@@ -35,7 +35,7 @@ int main(int argv, char** args)
 	display.GetSize(&Width, &Height);
 
 	TextRenderer TextHandler(1280, 800);
-	TextHandler.LoadFont("./resources/fonts/FreeSans.ttf", 24);
+	TextHandler.LoadFont("./resources/fonts/FreeSans.ttf", 13);
 
 	Camera camera(glm::vec3(4, 5, -10), 70.0f, (float)Width / (float)Height, 0.1f, 100.0f);
 
@@ -113,7 +113,7 @@ int main(int argv, char** args)
 
 		shader.Unbind();
 
-		TextHandler.RenderText("AquaEngine 0.0.0-PreAlpha", 25.0f, 25.0f, 1.0f, glm::vec3(1.0));
+		TextHandler.RenderText("AquaEngine 0.0.0-PreAlpha", 10.0f, 10.0f, 1.0f, glm::vec3(1.0));
 
 		fb.Unbind();
 		fb.Draw(); 

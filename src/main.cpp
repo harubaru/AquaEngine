@@ -11,6 +11,7 @@
 #include <graphics/Camera.h>
 #include <graphics/Framebuffer.h>
 #include <graphics/Skybox.h>
+#include <graphics/TextRenderer.h>
 
 #include <core/Input.h>
 
@@ -33,6 +34,9 @@ int main(int argv, char** args)
 	int Width, Height;
 	display.GetSize(&Width, &Height);
 
+	TextRenderer TextHandler(1280, 800);
+	TextHandler.LoadFont("./resources/fonts/FreeSans.ttf", 24);
+
 	Camera camera(glm::vec3(4, 5, -10), 70.0f, (float)Width / (float)Height, 0.1f, 100.0f);
 
 	Shader shader("./resources/shaders/primitives/vert_mesh.glsl", "./resources/shaders/primitives/frag_mesh.glsl");
@@ -41,19 +45,6 @@ int main(int argv, char** args)
 	Texture spec("./resources/textures/WoodPlanksSpecularMap.png", GL_TEXTURE_2D);
 	Model cube("./resources/meshes/Cube.obj");
 	Model plane("./resources/meshes/Plane.obj");
-
-	Shader skyboxshader("./resources/shaders/primitives/vert_skybox.glsl", "./resources/shaders/primitives/frag_skybox.glsl");
-
-	std::vector<std::string> Faces = {
-		"./resources/textures/skybox/miramar_rt.tga",
-		"./resources/textures/skybox/miramar_lf.tga",
-		"./resources/textures/skybox/miramar_up.tga",
-		"./resources/textures/skybox/miramar_dn.tga",
-		"./resources/textures/skybox/miramar_bk.tga",
-		"./resources/textures/skybox/miramar_ft.tga"
-	};
-
-	Skybox skybox(Faces, skyboxshader, cube);
 
 	shader.Bind();
 	// material configuration
@@ -102,7 +93,6 @@ int main(int argv, char** args)
 		counter += 0.01f;
 
 		camera.Update(90.0, -30.0, glm::vec3(x, 3, y), 70.0f, (float)Width / (float)Height, 0.1f, 100.0f);
-
 		fb.Bind();
 		graphics.Clear(0.0, 0.0, 0.0);
 
@@ -123,13 +113,13 @@ int main(int argv, char** args)
 
 		shader.Unbind();
 
+		TextHandler.RenderText("AquaEngine 0.0.0-PreAlpha", 25.0f, 25.0f, 1.0f, glm::vec3(1.0));
+
 		fb.Unbind();
-		fb.Draw();
+		fb.Draw(); 
 
-//		skybox.Draw(camera);
-
-		InputHandler.Update();
 		display.Update();
+		InputHandler.Update();
 	}
 
 	return 0;

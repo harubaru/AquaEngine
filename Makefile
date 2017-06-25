@@ -2,12 +2,12 @@ CC = g++
 C = gcc
 LD = g++
 
-INCLUDE_PATHS = -IC:./dependencies/includes
+INCLUDE_PATHS = -IC:./dependencies/includes -I/usr/include/freetype2
 LIBRARY_PATHS = -LC:./dependencies/libs
 
 C_COMPILER_FLAGS = -I./include -O3 $(INCLUDE_PATHS)
 CXX_COMPILER_FLAGS = -std=c++14 -I./include -O3 -Wall -Wextra -Werror $(INCLUDE_PATHS)
-LINUX_LINKER_FLAGS   = -lSDL2 -lGLEW -lGL -lassimp
+LINUX_LINKER_FLAGS   = -lSDL2 -lGLEW -lGL -lassimp -lfreetype
 WIN32_LINKER_FLAGS   = -lmingw32 -lSDL2main -lSDl2 -lglew32 -lopengl32 -lassimp.dll
 
 LINUX_BINARY = aquaengine

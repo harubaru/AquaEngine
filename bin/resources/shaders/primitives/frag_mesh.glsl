@@ -14,6 +14,8 @@ struct DirLight {
 	vec3 ambient;
 	vec3 diffuse;
 	vec3 specular;
+
+	bool render;
 };
 
 uniform DirLight dirlight;
@@ -24,6 +26,8 @@ struct PointLight {
 	vec3 ambient;
 	vec3 diffuse;
 	vec3 specular;
+
+	bool render;
 };
 
 struct SpotLight {
@@ -36,6 +40,8 @@ struct SpotLight {
 	vec3 ambient;
 	vec3 diffuse;
 	vec3 specular;
+
+	bool render;
 };
 
 // customizable constants
@@ -63,11 +69,16 @@ void main()
 	vec3 norm = normalize(Normal);
 	vec3 viewdir = normalize(CameraPos - FragPos);
 
-	//vec3 result = CalcDirLight(dirlight, norm, viewdir);
 	vec3 result;
 
-	for(int i = 0; i < NumLights; i++)
+	if(dirlight.render == true)
+		result = CalcDirLight(dirlight, norm, viewdir);
+
+	for(int i = 0; i < NumLights; i++) {
+		if(PointLights[i].render != true)
+			continue;
 		result += CalcPointLight(PointLights[i], norm, FragPos, viewdir);
+	}
 
 	result = pow(result, vec3(1.0 / 1.5));
 	Color = vec4(result, 1.0);

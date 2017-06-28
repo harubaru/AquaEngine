@@ -1,6 +1,6 @@
 #include <graphics/Display.h>
 
-Display::Display(int w, int h, const std::string& title, uint32_t AdditionalFlags) : Close(false)
+Display::Display(int w, int h, const std::string& title, int multisamples, uint32_t AdditionalFlags) : Close(false)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 
@@ -16,8 +16,13 @@ Display::Display(int w, int h, const std::string& title, uint32_t AdditionalFlag
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
+	if (multisamples != 0) {
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, multisamples);
+	}
+	
 	uint32_t SDL_Window_Flags = SDL_WINDOW_OPENGL;
-	if(AdditionalFlags)
+	if (AdditionalFlags)
 		SDL_Window_Flags |= AdditionalFlags;
 
 	m_Window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, SDL_Window_Flags);

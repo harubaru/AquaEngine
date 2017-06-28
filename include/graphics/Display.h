@@ -11,7 +11,7 @@ class Display
 	SDL_Window* m_Window;
 	SDL_GLContext m_OpenGLContext;
 public:
-	Display(int w, int h, const std::string& title, uint32_t AdditionalFlags);
+	Display(int w, int h, const std::string& title, int multisamples, uint32_t AdditionalFlags);
 	~Display();
 
 	bool Close;

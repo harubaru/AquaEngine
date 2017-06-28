@@ -27,7 +27,7 @@ int main(int argv, char** args)
 	Clock clock;
 	Clock_Initialize(&clock);
 
-	Display display(1280, 800, "AquaEngine", 0);
+	Display display(1280, 800, "AquaEngine", 4, 0);
 	Graphics graphics(display);
 	Input InputHandler;
 

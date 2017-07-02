@@ -72,6 +72,9 @@ void Shader::LinkShaders(GLuint shader1, GLuint shader2)
 	int log_length;
 	glGetProgramiv(ShaderProgram, GL_INFO_LOG_LENGTH, &log_length);
 
+	glDeleteShader(VertShader);
+	glDeleteShader(FragShader);
+
 	if(log_length > 0) {
 		GLchar infolog[log_length];
 		glGetProgramInfoLog(ShaderProgram, log_length, NULL, infolog);
@@ -88,9 +91,6 @@ Shader::~Shader()
 {
 	glDetachShader(ShaderProgram, VertShader);
 	glDetachShader(ShaderProgram, FragShader);
-
-	glDeleteShader(VertShader);
-	glDeleteShader(FragShader);
 
 	glDeleteProgram(ShaderProgram);
 }

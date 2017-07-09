@@ -2,7 +2,7 @@ CXX = g++
 C = gcc
 LD = g++
 
-INCLUDE_PATHS = -IC:./dependencies/includes -I/usr/include/freetype2
+INCLUDE_PATHS = -IC:./dependencies/includes
 LIBRARY_PATHS = -LC:./dependencies/libs
 
 C_COMPILER_FLAGS = -I./include -O3 $(INCLUDE_PATHS)
@@ -24,7 +24,7 @@ linux: $(LINUX_BINARY)
 win32: $(WIN32_BINARY)
 
 $(LINUX_BINARY): $(OBJS)
-	$(LD) $(OBJS) $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(LINUX_LINKER_FLAGS) -o $(BINFOLDER)/$(LINUX_BINARY)
+	$(LD) $(OBJS) $(INCLUDE_PATHS) -I/usr/include/freetype2 $(LIBRARY_PATHS) $(LINUX_LINKER_FLAGS) -o $(BINFOLDER)/$(LINUX_BINARY)
 	chmod +x $(BINFOLDER)/$(LINUX_BINARY)
 
 $(WIN32_BINARY): $(OBJS)

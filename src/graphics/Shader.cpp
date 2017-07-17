@@ -83,6 +83,7 @@ void Shader::LinkShaders(GLuint shader1, GLuint shader2)
 }
 
 Shader::Shader(const std::string& VertShaderFile, const std::string& FragShaderFile)
+	: BindState(false)
 {
 	Load(VertShaderFile, FragShaderFile);
 }
@@ -143,10 +144,12 @@ void Shader::SetMat4(const std::string& uniform, const glm::mat4& m)
 
 void Shader::Bind()
 {
+	BindState = true;
 	glUseProgram(ShaderProgram);
 }
 
 void Shader::Unbind()
 {
+	BindState = false;
 	glUseProgram(0);
 }

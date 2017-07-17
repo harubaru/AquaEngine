@@ -2,7 +2,7 @@ CXX = g++
 C = gcc
 LD = g++
 
-INCLUDE_PATHS = -IC:./dependencies/includes
+INCLUDE_PATHS = -IC:./dependencies/includes -I/usr/include/freetype2
 LIBRARY_PATHS = -LC:./dependencies/libs
 
 C_COMPILER_FLAGS = -I./include -O3 $(INCLUDE_PATHS)
@@ -17,14 +17,15 @@ BINFOLDER = ./bin
 include ./src/Makefile
 
 help:
-	@echo '{win32 | linux | clean}'
+	@echo 'building: {win32 | linux | clean}'
+	@echo 'testing:  {linux_bin | win32_bint}'
 
 linux: $(LINUX_BINARY)
 
 win32: $(WIN32_BINARY)
 
 $(LINUX_BINARY): $(OBJS)
-	$(LD) $(OBJS) $(INCLUDE_PATHS) -I/usr/include/freetype2 $(LIBRARY_PATHS) $(LINUX_LINKER_FLAGS) -o $(BINFOLDER)/$(LINUX_BINARY)
+	$(LD) $(OBJS) $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(LINUX_LINKER_FLAGS) -o $(BINFOLDER)/$(LINUX_BINARY)
 	chmod +x $(BINFOLDER)/$(LINUX_BINARY)
 
 $(WIN32_BINARY): $(OBJS)
@@ -38,3 +39,9 @@ $(WIN32_BINARY): $(OBJS)
 
 clean:
 	rm -f $(OBJS)
+
+linux_bin:
+	./bin/aquaengine
+
+win32_bin:
+	./bin/aquaengine.exe

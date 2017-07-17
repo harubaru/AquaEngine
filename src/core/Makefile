@@ -1,1 +1,1 @@
-OBJS:= $(OBJS) ./src/core/Input.o
+OBJS:= $(OBJS) ./src/core/Input.o ./src/core/PhysEntity.o

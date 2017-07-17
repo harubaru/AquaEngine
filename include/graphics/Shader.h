@@ -41,6 +41,8 @@ public:
 
 	void Bind();
 	void Unbind();
+
+	bool BindState;
 };
 
 #endif

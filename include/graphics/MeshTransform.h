@@ -5,6 +5,8 @@
 #include <graphics/glm/glm.hpp>
 #include <graphics/glm/gtx/transform.hpp>
 
+using namespace glm;
+
 class MeshTransform {
 private:
 	glm::vec3 m_Pos, m_Rot, m_Scale;
@@ -16,6 +18,8 @@ public:
 
 	MeshTransform() 
 		: m_Pos(glm::vec3(0.0, 0.0, 0.0)), m_Rot(glm::vec3(0.0, 0.0, 1.0)), m_Scale(glm::vec3(1.0, 1.0, 1.0)), m_Angle(0.0) {}
+
+	inline void Load(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale) { m_Pos = pos; m_Rot = rot; m_Scale = scale; m_Angle = 0.0f; }
 
 	inline glm::vec3 GetPos()   { return m_Pos; }
 	inline glm::vec3 GetRot()   { return m_Rot; }

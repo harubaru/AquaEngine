@@ -13,6 +13,8 @@
 #include <graphics/Skybox.h>
 #include <graphics/TextRenderer.h>
 
+#include <core/PhysEntity.h>
+
 #include <core/Input.h>
 
 #undef main
@@ -34,8 +36,8 @@ int main(int argv, char** args)
 	int Width, Height;
 	display.GetSize(&Width, &Height);
 
-	TextRenderer TextHandler(1280, 800);
-	TextHandler.LoadFont("./resources/fonts/FreeSans.ttf", 13);
+//	TextRenderer TextHandler(1280, 800);
+//	TextHandler.LoadFont("./resources/fonts/FreeSans.ttf", 13);
 
 	Camera camera(glm::vec3(4, 5, -10), 70.0f, (float)Width / (float)Height, 0.1f, 100.0f);
 
@@ -45,6 +47,8 @@ int main(int argv, char** args)
 	Texture spec("./resources/textures/WoodPlanksSpecularMap.png", GL_TEXTURE_2D);
 	Model cube("./resources/meshes/Cube.obj");
 	Model plane("./resources/meshes/Plane.obj");
+
+	PhysEntity ent("./resources/meshes/Cube.obj", "./resources/textures/WoodPlanksDiffuseMap.jpg", vec3(0, 2, 0), vec3(0, 0, 1), vec3(1, 1, 1));
 
 	shader.Bind();
 	// material configuration
@@ -114,9 +118,11 @@ int main(int argv, char** args)
 		spec.Unbind();
 		diff.Unbind();
 
+		ent.Render(shader);
+
 		shader.Unbind();
 
-		TextHandler.RenderText("AquaEngine 0.0.0-PreAlpha", 10.0f, 10.0f, 1.0f, glm::vec3(1.0));
+//		TextHandler.RenderText("AquaEngine 0.0.0-PreAlpha", 10.0f, 10.0f, 1.0f, glm::vec3(1.0));
 
 		fb.Unbind();
 		fb.Draw(); 

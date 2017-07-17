@@ -15,7 +15,7 @@ public:
 	Texture(){}
 	~Texture();
 
-	void LoadFile(std::string FilePath);
+	void LoadFile(std::string FilePath, GLenum Target);
 
 	void Bind(GLuint texUnit);
 	void Unbind();

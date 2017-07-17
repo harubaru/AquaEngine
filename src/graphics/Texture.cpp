@@ -2,7 +2,7 @@
 
 Texture::Texture(std::string FilePath, GLenum Target) : mTarget(Target)
 {
-	LoadFile(FilePath);
+	LoadFile(FilePath, Target);
 }
 
 Texture::~Texture()
@@ -24,8 +24,9 @@ void Texture::Unbind()
 	glBindTexture(mTarget, 0);
 }
 
-void Texture::LoadFile(std::string FilePath)
+void Texture::LoadFile(std::string FilePath, GLenum Target)
 {
+	mTarget = Target;
 	int w, h, comp;
 	unsigned char* texData = stbi_load(FilePath.c_str(), &w, &h, &comp, STBI_rgb_alpha);
 

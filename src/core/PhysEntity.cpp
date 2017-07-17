@@ -8,7 +8,7 @@ PhysEntity::PhysEntity(const std::string& ModelPath, const std::string& TextureP
 void PhysEntity::Load(const std::string& ModelPath, const std::string& TexturePath, vec3 Position, vec3 RotAxis, vec3 Scale)
 {
 	mModel.Load(ModelPath);
-	mTexture.LoadFile(TexturePath);
+	mTexture.LoadFile(TexturePath, GL_TEXTURE_2D);
 	Transform.Load(Position, RotAxis, Scale);
 }
 

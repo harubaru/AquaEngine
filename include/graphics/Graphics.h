@@ -21,6 +21,7 @@ public:
 	Graphics(Display& display);
 
 	void InitWindow(const char* title, int w, int h, uint32_t sdl_flags);
+	void Clear(void);
 	void Clear(float, float, float);
 	void GetGLError();
 	hardwareinfo_t GetHardwareInfo();

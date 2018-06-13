@@ -1,5 +1,5 @@
 #include <graphics/TextRenderer.h>
-
+/*
 TextRenderer::TextRenderer(int InitialWidth, int InitialHeight)
 {
 	// enable blending
@@ -123,3 +123,4 @@ void TextRenderer::RenderText(std::string Text, float x, float y, float scale, g
 
 	mTextShader.Unbind();
 }
+*/

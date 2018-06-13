@@ -30,7 +30,7 @@ void Input::Update()
 			// mouse input
 			case SDL_MOUSEMOTION:
 				m_MouseX = m_InputEvent.motion.x;
-				m_MouseY = m_InputEvent.motion.x;
+				m_MouseY = m_InputEvent.motion.y;
 				break;
 			case SDL_MOUSEBUTTONDOWN:
 				m_MouseStates[m_InputEvent.button.button] = true;

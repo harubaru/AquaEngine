@@ -56,7 +56,13 @@ GLuint Shader::CompileShader(const std::string& SourceCode, gl_shadertype shader
 	if (log_length > 0) {
 		GLchar infolog[log_length];
 		glGetShaderInfoLog(shader, log_length, NULL, infolog);
-		std::cout << "Shader Error: Failed to compile.\n" << infolog << std::endl;
+		std::cout << "Shader failed to compile - ";	
+		if (VERTEX_SHADER)
+			 std::cout << this->ShaderFilePaths[0] << std::endl;
+		else
+			std::cout << this->ShaderFilePaths[1] << std::endl;
+
+		std::cout << "----- Error Log -----\n" << infolog << std::endl;
 	}
 	return shader;
 }
@@ -88,6 +94,12 @@ Shader::Shader(const std::string& VertShaderFile, const std::string& FragShaderF
 	Load(VertShaderFile, FragShaderFile);
 }
 
+Shader::Shader(const std::string& ShaderPath)
+	: BindState(false)
+{
+	this->Load(ShaderPath);
+}
+
 Shader::~Shader()
 {
 	glDetachShader(ShaderProgram, VertShader);
@@ -96,8 +108,29 @@ Shader::~Shader()
 	glDeleteProgram(ShaderProgram);
 }
 
+void Shader::Load(const std::string& ShaderPath)
+{
+	std::string suffix[2] = {
+		"vs.glsl",
+		"fs.glsl"
+	};
+
+	std::string vs_path;
+	vs_path.append(ShaderPath);
+	vs_path.append(suffix[0]);
+
+	std::string fs_path;
+	fs_path.append(ShaderPath);
+	fs_path.append(suffix[1]);
+
+	this->Load(vs_path, fs_path);
+}
+
 void Shader::Load(const std::string& VertShaderFile, const std::string& FragShaderFile)
 {
+	this->ShaderFilePaths[0] = VertShaderFile;
+	this->ShaderFilePaths[1] = FragShaderFile;
+
 	std::string VertShaderSource = GetShaderSource(VertShaderFile);
 	std::string FragShaderSource = GetShaderSource(FragShaderFile);
 
@@ -107,40 +140,13 @@ void Shader::Load(const std::string& VertShaderFile, const std::string& FragShad
 	LinkShaders(VertShader, FragShader);
 }
 
-void Shader::SetModel(const glm::mat4& Model)
-{
-	glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, "Model"), 1, GL_FALSE, glm::value_ptr(Model));
-}
-
-void Shader::SetView(const glm::mat4& View)
-{
-	glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, "View"), 1, GL_FALSE, glm::value_ptr(View));
-}
-
-void Shader::SetProjection(const glm::mat4& Projection)
-{
-	glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, "Projection"), 1, GL_FALSE, glm::value_ptr(Projection));
-}
-
-void Shader::SetVec3(const std::string& uniform, const glm::vec3& v)
-{
-	glUniform3fv(glGetUniformLocation(ShaderProgram, uniform.c_str()), 1, glm::value_ptr(v));
-}
-
-void Shader::SetFloat(const std::string& uniform, const float& f)
-{
-	glUniform1f(glGetUniformLocation(ShaderProgram, uniform.c_str()), f);
-}
-
-void Shader::SetInt(const std::string& uniform, const int& i)
-{
-	glUniform1i(glGetUniformLocation(ShaderProgram, uniform.c_str()), i);
-}
-
-void Shader::SetMat4(const std::string& uniform, const glm::mat4& m)
-{
-	glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, uniform.c_str()), 1, GL_FALSE, glm::value_ptr(m));
-}
+void Shader::SetModel(const glm::mat4& Model) { glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, "Model"), 1, GL_FALSE, glm::value_ptr(Model)); }
+void Shader::SetView(const glm::mat4& View) { glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, "View"), 1, GL_FALSE, glm::value_ptr(View)); }
+void Shader::SetProjection(const glm::mat4& Projection) { glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, "Projection"), 1, GL_FALSE, glm::value_ptr(Projection)); }
+void Shader::SetVec3(const std::string& uniform, const glm::vec3& v) { glUniform3fv(glGetUniformLocation(ShaderProgram, uniform.c_str()), 1, glm::value_ptr(v)); }
+void Shader::SetFloat(const std::string& uniform, const float& f) { glUniform1f(glGetUniformLocation(ShaderProgram, uniform.c_str()), f); }
+void Shader::SetInt(const std::string& uniform, const int& i) { glUniform1i(glGetUniformLocation(ShaderProgram, uniform.c_str()), i); }
+void Shader::SetMat4(const std::string& uniform, const glm::mat4& m) { glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, uniform.c_str()), 1, GL_FALSE, glm::value_ptr(m)); }
 
 void Shader::Bind()
 {

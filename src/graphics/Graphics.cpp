@@ -20,7 +20,13 @@ Graphics::Graphics(Display& display)
 	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_FRAMEBUFFER_SRGB);
+	glEnable(GL_MULTISAMPLE);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void Graphics::Clear(void)
+{
+	this->Clear(0.0f, 0.0f, 0.0f);
 }
 
 void Graphics::Clear(float r, float g, float b)
@@ -28,7 +34,7 @@ void Graphics::Clear(float r, float g, float b)
 	int w, h;
 	m_Display->GetSize(&w, &h);
 	glViewport(0, 0, w, h);
-	glClearColor(r, g, b, 255.0f);
+	glClearColor(r, g, b, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 

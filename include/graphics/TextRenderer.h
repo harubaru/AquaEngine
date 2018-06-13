@@ -1,6 +1,6 @@
 #ifndef AQUAENGINE_GRAPHICS_TEXTRENDERER_H
 #define AQUAENGINE_GRAPHICS_TEXTRENDERER_H
-
+/*
 #include <iostream>
 #include <map>
 #include <string>
@@ -28,5 +28,5 @@ public:
 	void LoadFont(std::string Path, int Size);
 	void RenderText(std::string Text, float x, float y, float scale, glm::vec3 Color);
 };
-
+*/
 #endif

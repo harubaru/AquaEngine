@@ -1,6 +1,7 @@
 #ifndef AQUAENGINE_GRAPHICS_CAMERA_H
 #define AQUAENGINE_GRAPHICS_CAMERA_H
 
+#include <graphics/Display.h>
 #include <graphics/glm/glm.hpp>
 #include <graphics/glm/gtx/transform.hpp>
 
@@ -10,9 +11,14 @@ private:
 	glm::vec3 m_pos;
 	glm::vec3 m_forward;
 	glm::vec3 m_up;
+	bool m_CursorLocked;
+	float m_MouseSensitivity;
+	float m_HorizAngle, m_VertAngle;
+
+	void ProcessMouseMovement(float xoffset, float yoffset);
 public:
 	Camera(const glm::vec3& pos, float fov, float aspect, float zNear, float zFar);
-	void Update(float yaw, float pitch, const glm::vec3& pos, float fov, float aspect, float zNear, float zFar);
+	void Update(Display &display, float deltatime, const glm::vec3& pos, float fov, float aspect, float zNear, float zFar);
 	void SetView(float yaw, float pitch);
 
 	inline glm::mat4 GetView()
@@ -28,6 +34,16 @@ public:
 	inline glm::vec3 GetPos()
 	{
 		return m_pos;
+	}
+
+	inline void LockCursor()
+	{
+		m_CursorLocked = true;
+	}
+
+	inline void UnlockCursor()
+	{
+		m_CursorLocked = false;
 	}
 };
 

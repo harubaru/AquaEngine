@@ -23,11 +23,15 @@ private:
 
 	GLuint VertShader, FragShader;
 	GLuint ShaderProgram;
+
+	std::string ShaderFilePaths[2];
 public:
 	Shader() {}
 	Shader(const std::string& VertShaderFile, const std::string& FragShaderFile);
+	Shader(const std::string& ShaderPath);
 	~Shader();
 
+	void Load(const std::string& ShaderPath);
 	void Load(const std::string& VertShaderFile, const std::string& FragShaderFile);
 
 	void SetModel(const glm::mat4& Model);

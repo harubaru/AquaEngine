@@ -5,6 +5,7 @@
 #include <graphics/Texture.h>
 #include <graphics/Shader.h>
 #include <graphics/MeshTransform.h>
+#include <graphics/ShadowMapping.h>
 
 class PhysEntity {
 private:
@@ -15,9 +16,9 @@ public:
 	PhysEntity(const std::string& ModelPath, const std::string& TexturePath, vec3 Position, vec3 RotAxis, vec3 Scale);
 
 	void Load(const std::string& ModelPath, const std::string& TexturePath, vec3 Position, vec3 RotAxis, vec3 Scale);
-
-	// graphical stuff
 	void Render(Shader& shader);
+
+	bool operator==(PhysEntity &ent);
 
 	MeshTransform Transform;
 };

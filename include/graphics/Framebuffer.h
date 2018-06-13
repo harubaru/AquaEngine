@@ -30,10 +30,11 @@ class Framebuffer {
         Shader FBShader;
 	Mesh FBQuad;
 public:
-        Framebuffer(unsigned int width, unsigned int height);
+        Framebuffer() {}
+        Framebuffer(unsigned int width, unsigned int height, Shader &shader);
         ~Framebuffer();
 
-        void Load(unsigned int width, unsigned int height);
+        void Load(unsigned int width, unsigned int height, Shader &shader);
         void Destroy();
         void Resize(unsigned int width, unsigned int height);
 

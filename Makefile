@@ -5,20 +5,16 @@ LD = g++
 INCLUDE_PATHS = -IC:./dependencies/includes -I/usr/include/freetype2
 LIBRARY_PATHS = -LC:./dependencies/libs
 
-C_COMPILER_FLAGS = -I./include -O3 $(INCLUDE_PATHS)
-CXX_COMPILER_FLAGS = -std=c++14 -I./include -O3 -Wall -Wextra -Werror $(INCLUDE_PATHS)
+C_COMPILER_FLAGS = -I./include -O3 -ggdb $(INCLUDE_PATHS)
+CXX_COMPILER_FLAGS = -std=c++14 -I./include -O3 -Wall -Wextra -ggdb $(INCLUDE_PATHS)
 LINUX_LINKER_FLAGS   = -lGL -lGLEW -lSDL2 -lassimp -lfreetype
-WIN32_LINKER_FLAGS   = -lmingw32 -lSDL2main -lSDl2 -lglew32 -lopengl32 -lassimp.dll
+WIN32_LINKER_FLAGS   = -lmingw32 -lSDL2main -lSDl2 -lglew32 -lopengl32 -lassimp
 
 LINUX_BINARY = aquaengine
 WIN32_BINARY = aquaengine.exe
 BINFOLDER = ./bin
 
 include ./src/Makefile
-
-help:
-	@echo 'building: {win32 | linux | clean}'
-	@echo 'testing:  {linux_bin | win32_bint}'
 
 linux: $(LINUX_BINARY)
 
@@ -38,7 +34,7 @@ $(WIN32_BINARY): $(OBJS)
 	$(C) $(C_COMPILER_FLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -rf $(OBJS)
 
 linux_bin:
 	./bin/aquaengine

@@ -1,8 +1,8 @@
 #include <graphics/Framebuffer.h>
 
-Framebuffer::Framebuffer(unsigned int width, unsigned int height)
+Framebuffer::Framebuffer(unsigned int width, unsigned int height, Shader &shader)
 {
-        Load(width, height);
+        Load(width, height, shader);
 }
 
 Framebuffer::~Framebuffer()
@@ -10,7 +10,7 @@ Framebuffer::~Framebuffer()
         Destroy();
 }
 
-void Framebuffer::Load(unsigned int width, unsigned int height)
+void Framebuffer::Load(unsigned int width, unsigned int height, Shader &shader)
 {
         // Generate Framebuffer
         glGenFramebuffers(1, &mFramebuffer);
@@ -22,8 +22,10 @@ void Framebuffer::Load(unsigned int width, unsigned int height)
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);        
 
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mFramebufferTex, 0);
 
@@ -37,7 +39,7 @@ void Framebuffer::Load(unsigned int width, unsigned int height)
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-        FBShader.Load("resources/shaders/framebuffer/vert_fb.glsl", "resources/shaders/framebuffer/frag_fb.glsl");
+        FBShader = shader;
         FBQuad.Load(FBQuadVertices, FBQuadIndices, FBQuadIndices.size());
 
         FBShader.Bind();
@@ -55,12 +57,13 @@ void Framebuffer::Destroy()
 void Framebuffer::Resize(unsigned int width, unsigned int height)
 {
         Destroy();
-        Load(width, height);
+        Load(width, height, FBShader);
 }
 
 void Framebuffer::Bind()
 {
         glBindFramebuffer(GL_FRAMEBUFFER, mFramebuffer);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Framebuffer::Unbind()

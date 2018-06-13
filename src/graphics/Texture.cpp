@@ -16,7 +16,7 @@ void Texture::Bind(GLuint texUnit)
 		return;
 
 	glActiveTexture(GL_TEXTURE0 + texUnit);
-	glBindTexture(GL_TEXTURE_2D, mTexHandle);
+	glBindTexture(mTarget, mTexHandle);
 }
 
 void Texture::Unbind()

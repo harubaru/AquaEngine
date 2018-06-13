@@ -19,10 +19,23 @@ void PhysEntity::Render(Shader& shader)
 
 	shader.SetModel(Transform.GetModel());
 
+	shader.SetInt("diffuseTexture", 0); // tex 1
+	shader.SetInt("shadowMap", 1); // tex 1
+
 	mTexture.Bind(0);
+	ShadowMapping_Bind();
 	mModel.Render();
+	ShadowMapping_Unbind();
 	mTexture.Unbind();
 
 	if(shader.BindState)
 		shader.Unbind();
+}
+
+bool PhysEntity::operator==(PhysEntity &ent)
+{
+	if (this == &ent)
+		return true;
+	else
+		return false;
 }

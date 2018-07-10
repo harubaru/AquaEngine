@@ -2,12 +2,13 @@
 #define AQUAENGINE_CORE_CONVAR_H
 
 #include <export.h>
-
 #include <string>
 
 class API ConVar {
 public:
-	ConVar(std::string name) { this->name = name; }
+	ConVar() {}
+	ConVar(std::string name, std::string str);
+	ConVar(std::string name, float value);
 
 	std::string name;
 	std::string str;

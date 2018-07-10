@@ -1,19 +1,21 @@
 #ifndef AQUAENGINE_GRAPHICS_GRAPHICS_H
 #define AQUAENGINE_GRAPHICS_GRAPHICS_H
 
+#include <export.h>
+
 #include <iostream>
 #include <string>
 
-#include <GL/glew.h>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_opengl.h>
+#include <core/ConVar.h>
 
 #include <graphics/Display.h>
 #include <graphics/Shader.h>
+#include <graphics/gl3w.h>
 
-struct hardwareinfo_t;
+struct API hardwareinfo_t;
 
-class Graphics
+class API Graphics
 {
 private:
 	Display* m_Display;
@@ -26,5 +28,7 @@ public:
 	void GetGLError();
 	hardwareinfo_t GetHardwareInfo();
 };
+
+API bool GL_IsSupported(std::string extension);
 
 #endif

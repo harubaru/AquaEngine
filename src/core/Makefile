@@ -1,1 +1,1 @@
-OBJS:= $(OBJS) ./src/core/Input.o ./src/core/PhysEntity.o ./src/core/SceneRenderer.o 
+OBJS:= $(OBJS) ./src/core/BSPParser.o ./src/core/Input.o ./src/core/SceneObject.o ./src/core/SceneRenderer.o  ./src/core/ConVar.o ./src/core/Debug.o ./src/core/SceneBrush.o ./src/core/Test.o

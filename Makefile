@@ -1,43 +1,58 @@
+#CXX = clang++ -target i686-pc-windows-gnu
+#CC = clang -target i686-pc-windows-gnu
+#LD = clang++ -target i686-pc-windows-gnu
+
 CXX = g++
-C = gcc
-LD = g++
+CC  = gcc
+LD  = g++
 
 INCLUDE_PATHS = -IC:./dependencies/includes -I/usr/include/freetype2
 LIBRARY_PATHS = -LC:./dependencies/libs
 
-C_COMPILER_FLAGS = -I./include -O3 -ggdb $(INCLUDE_PATHS)
-CXX_COMPILER_FLAGS = -std=c++14 -I./include -O3 -Wall -Wextra -ggdb $(INCLUDE_PATHS)
-LINUX_LINKER_FLAGS   = -lGL -lGLEW -lSDL2 -lassimp -lfreetype
-WIN32_LINKER_FLAGS   = -lmingw32 -lSDL2main -lSDl2 -lglew32 -lopengl32 -lassimp
+C_COMPILER_FLAGS = -I./include -O0 $(INCLUDE_PATHS)
+CXX_COMPILER_FLAGS = -ggdb -std=c++14 -I./include -O0 -Wall -Wextra $(INCLUDE_PATHS)
 
-LINUX_BINARY = aquaengine
-WIN32_BINARY = aquaengine.exe
 BINFOLDER = ./bin
 
 include ./src/Makefile
 
-linux: $(LINUX_BINARY)
+ifeq ($(OS), Windows_NT)
+	BINARY = aquaengine
+	LIBRARIES = -ggdb -lpthread -lSDl2 -lglew32 -lopengl32 -lassimp -lfreetype -lopenal32 -logg -lvorbis -lvorbisfile
+	LINKER_FLAGS = -DDLL_BUILD $(LIBRARIES) -shared -Wl,--out-implib=$(BINFOLDER)/lib$(BINARY).a
 
-win32: $(WIN32_BINARY)
+	LDMSG = LD $(BINARY)
+	CLEANMSG = rm -rf OBJS
+	CXXMSG = CXX $<
+	CCMSG = CC $<
+else
+	UNAME := $(shell uname -s)
+	ifeq ($(UNAME), Linux)
+		LINKER_FLAGS   = -lGL -lGLEW -lSDL2 -lassimp -lfreetype
+		BINARY = aquaengine
+	endif
+endif
 
-$(LINUX_BINARY): $(OBJS)
-	$(LD) $(OBJS) $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(LINUX_LINKER_FLAGS) -o $(BINFOLDER)/$(LINUX_BINARY)
-	chmod +x $(BINFOLDER)/$(LINUX_BINARY)
+all: $(OBJS)
+	@echo $(LDMSG)
+	$(LD) $(OBJS) $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(LINKER_FLAGS) -o $(BINFOLDER)/$(BINARY).dll
 
-$(WIN32_BINARY): $(OBJS)
-	$(LD) $(OBJS) $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(WIN32_LINKER_FLAGS) -o $(BINFOLDER)/$(WIN32_BINARY)
+test:
+	windres ./src/icon.rc -O coff -o ./src/icon.res
+	$(CXX) $(CXX_COMPILER_FLAGS) -c ./src/main.cpp -o ./src/main.o
+	$(LD) ./src/main.o ./src/icon.res $(INCLUDE_PATHS) $(LIBRARY_PATHS) -L./bin -o $(BINFOLDER)/test.exe $(LIBRARIES) -laquaengine
 
 %.o: %.cpp
+	@echo $(CXXMSG)
 	$(CXX) $(CXX_COMPILER_FLAGS) -c $< -o $@
 
 %.o: %.c
-	$(C) $(C_COMPILER_FLAGS) -c $< -o $@
+	@echo $(CCMSG)
+	$(CC) $(C_COMPILER_FLAGS) -c $< -o $@
+
+.PHONY : clean
 
 clean:
-	rm -rf $(OBJS)
+	rm -rf $(OBJS) ./src/main.o
 
-linux_bin:
-	./bin/aquaengine
-
-win32_bin:
-	./bin/aquaengine.exe
+#$(V).SILENT:

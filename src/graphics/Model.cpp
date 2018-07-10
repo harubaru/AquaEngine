@@ -5,14 +5,6 @@ Model::Model(const std::string& FilePath)
         Load(FilePath);
 }
 
-Model::~Model()
-{
-        if(!MeshFail) {
-                for(uint32_t i = 0; i < MeshCount; i++)
-                        Meshes[i].Destroy();
-        }
-}
-
 void Model::Load(const std::string& FilePath)
 {
         Assimp::Importer importer;
@@ -31,6 +23,14 @@ void Model::Load(const std::string& FilePath)
         Meshes.reserve(MeshCount + 1);
 
         this->ProcessNode(scene->mRootNode, scene);
+}
+
+void Model::Destroy()
+{
+        if(!MeshFail) {
+                for(uint32_t i = 0; i < MeshCount; i++)
+                        Meshes[i].Destroy();
+        }
 }
 
 void Model::ProcessNode(aiNode* Node, const aiScene* Scene)
@@ -77,7 +77,7 @@ Mesh Model::ProcessMesh(aiMesh* mesh)
         }
 
         if(mesh->mMaterialIndex > 0) { // TODO: process materials.
-
+                
         }
 
         return Mesh(&vertices[0], indices);

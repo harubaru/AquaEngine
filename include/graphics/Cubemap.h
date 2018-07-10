@@ -1,13 +1,15 @@
 #ifndef AQUAENGINE_GRAPHICS_CUBEMAP_H
 #define AQUAENGINE_GRAPHICS_CUBEMAP_H
 
+#include <export.h>
+
 #include <vector>
 #include <string>
 #include <iostream>
-#include <GL/glew.h>
+#include <graphics/gl3w.h>
 #include <util/stb_image.h>
 
-class Cubemap {
+class API Cubemap {
 private:
         GLuint mTex;
 public:

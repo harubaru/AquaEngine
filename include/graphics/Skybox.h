@@ -1,18 +1,21 @@
 #ifndef AQUAENGINE_GRAPHICS_SKYBOX_H
 #define AQUAENGINE_GRAPHICS_SKYBOX_H
 
+#include <export.h>
+
+#include <iostream>
 #include <graphics/Cubemap.h>
 #include <graphics/Camera.h>
 #include <graphics/Shader.h>
-#include <graphics/Model.h>
 
-class Skybox {
+class API Skybox {
         Cubemap mSkybox;
         Shader mSkyboxShader;
-        Model mSkyboxModel;
 public:
-        Skybox(std::vector<std::string> Faces, Shader& SkyboxShader, Model& SkyboxModel);
+        Skybox(std::string filepath, std::string extension);
+        ~Skybox();
 
+        void Destroy();
         void Draw(Camera& LocalCamera);
 };
 

@@ -1,6 +1,8 @@
 #ifndef AQUAENGINE_GRAPHICS_MODEL_H
 #define AQUAENGINE_GRAPHICS_MODEL_H
 
+#include <export.h>
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -12,7 +14,7 @@
 #include <graphics/Shader.h>
 #include <graphics/MeshTransform.h>
 
-class Model {
+class API Model {
 private:
 	std::vector<Mesh> Meshes;
 
@@ -23,9 +25,9 @@ private:
 public:
 	Model() {}
 	Model(const std::string& FilePath);
-	~Model();
 
 	void Load(const std::string& FilePath);
+	void Destroy();
 	void Render();
 
 	MeshTransform Transform;

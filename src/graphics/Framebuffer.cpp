@@ -84,6 +84,7 @@ void Framebuffer::UnbindTex()
 
 void Framebuffer::Draw()
 {
+        glDisable(GL_CULL_FACE);
         glDisable(GL_DEPTH_TEST);
         glClear(GL_COLOR_BUFFER_BIT);
         FBShader.Bind();
@@ -92,4 +93,5 @@ void Framebuffer::Draw()
         UnbindTex();
         FBShader.Unbind();
         glEnable(GL_DEPTH_TEST);
+        glEnable(GL_CULL_FACE);
 }

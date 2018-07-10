@@ -1,13 +1,15 @@
 #ifndef AQUAENGINE_GRAPHICS_FRAMEBUFFER_H
 #define AQUAENGINE_GRAPHICS_FRAMEBUFFER_H
 
+#include <export.h>
+
 #include <iostream>
 #include <vector>
-#include <GL/glew.h>
+#include <graphics/gl3w.h>
 #include <graphics/Mesh.h>
 #include <graphics/Shader.h>
 
-class Framebuffer {
+class API Framebuffer {
         GLuint mFramebuffer;
         GLuint mFramebufferTex;
         GLuint mRenderbuffer;

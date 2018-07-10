@@ -1,26 +1,21 @@
-#ifndef AQUAENGINE_GRAPHICS_TEXTURE_H
-#define AQUAENGINE_GRAPHICS_TEXTURE_H
+#ifndef TEXTURE_H
+#define TEXTURE_H
 
-#include <iostream>
-#include <string>
-#include <GL/glew.h>
+#include <export.h>
+
 #include <util/stb_image.h>
 
-class Texture {
-private:
-	GLuint mTexHandle;
-	GLenum mTarget;
-public:
-	Texture(std::string FilePath, GLenum Target);
-	Texture(){}
-	~Texture();
+#include <graphics/gl3w.h>
+#include <iostream>
+#include <cstdlib>
+#include <cstring>
 
-	void LoadFile(std::string FilePath, GLenum Target);
+#include <graphics/Graphics.h>
+#include <core/ConVar.h>
 
-	void Bind(GLuint texUnit);
-	void Unbind();
-
-	inline GLuint GetTexHandle() { return mTexHandle; }
-};
+API GLuint Texture_Load(const char *f);
+API void Texture_Bind(GLuint texid, GLuint texunit);
+API void Texture_Destroy(GLuint texid);
+API void Texture_Cubemap_Bind(GLuint texid);
 
 #endif

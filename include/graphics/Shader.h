@@ -1,11 +1,13 @@
 #ifndef AQUAENGINE_GRAPHICS_SHADER_H
 #define AQUAENGINE_GRAPHICS_SHADER_H
 
+#include <export.h>
+
 #include <iostream>
 #include <string>
 #include <vector>
 #include <fstream>
-#include <GL/glew.h>
+#include <graphics/gl3w.h>
 #include <graphics/glm/glm.hpp>
 #include <graphics/glm/gtx/transform.hpp>
 #include <graphics/glm/gtc/type_ptr.hpp>
@@ -15,7 +17,7 @@ enum gl_shadertype {
 	FRAGMENT_SHADER = GL_FRAGMENT_SHADER
 };
 
-class Shader{
+class API Shader{
 private:
 	std::string GetShaderSource(const std::string& ShaderPath);
 	GLuint CompileShader(const std::string& SourceCode, gl_shadertype shadertype);

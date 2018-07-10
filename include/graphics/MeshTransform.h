@@ -1,48 +1,40 @@
 #ifndef AQUAENGINE_GRAPHICS_MESHTRANSFORM_H
 #define AQUAENGINE_GRAPHICS_MESHTRANSFORM_H
 
+#include <export.h>
+
 #include <iostream>
 #include <graphics/glm/glm.hpp>
 #include <graphics/glm/gtx/transform.hpp>
 
 using namespace glm;
 
-class MeshTransform {
+class API MeshTransform {
 private:
-	glm::vec3 m_Pos, m_Rot, m_Scale;
+	glm::vec3 *m_Pos, *m_Rot, *m_Scale;
 	glm::mat4 Model;
 	float m_Angle;
 public:
-	MeshTransform(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale) 
-		: m_Pos(pos), m_Rot(rot), m_Scale(scale), m_Angle(0.0)
-	{ Load(pos, rot, scale); }
+	MeshTransform() {}
+	MeshTransform(glm::vec3 pos, glm::vec3 rot, glm::vec3 scale) { Load(pos, rot, scale); }
+//	~MeshTransform() { delete m_Pos; delete m_Rot; delete m_Scale; }
 
-	MeshTransform() 
-		: m_Pos(glm::vec3(0.0, 0.0, 0.0)), m_Rot(glm::vec3(0.0, 0.0, 1.0)), m_Scale(glm::vec3(1.0, 1.0, 1.0)), m_Angle(0.0) {}
+	void Load(glm::vec3 pos, glm::vec3 rot, glm::vec3 scale);
+	void Destroy(void);
 
-	inline void Load(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale)
-	{
-		m_Pos = pos; m_Rot = rot; m_Scale = scale; m_Angle = 0.0f; 
-	
-		Model = glm::mat4(1.0f);
+	glm::vec3 *GetPos();
+	glm::vec3 *GetRot();
+	glm::vec3 *GetScale();
 
-		Model = glm::translate(Model, pos);
-		Model = glm::scale(Model, scale);
-	}
+	void SetPos(glm::vec3 pos);
+	void SetRot(glm::vec3 rot, float angle);
+	void SetScale(glm::vec3 scale);
 
-	inline glm::vec3 GetPos()   { return m_Pos; }
-	inline glm::vec3 GetRot()   { return m_Rot; }
-	inline glm::vec3 GetScale() { return m_Scale; }
+//	void Translate(glm::vec3 v);
+//	void Rotate(glm::vec3 v, float Angle);
+//	void Scale(glm::vec3 v);
 
-	inline void SetPos(glm::vec3 pos)     { m_Pos = pos; }
-	inline void SetRot(glm::vec3 rot, float angle)     { m_Rot = rot; m_Angle = angle; }
-	inline void SetScale(glm::vec3 scale) { m_Scale = scale; }
-
-	inline void Translate(glm::vec3 v) { Model = glm::translate(Model, v); }
-	inline void Rotate(glm::vec3 v, float Angle) { Model =  glm::rotate(Model, Angle, v); }
-	inline void Scale(glm::vec3 v) { Model = glm::scale(Model, v); }
-
-	inline glm::mat4 GetModel() { return Model; }
+	glm::mat4 GetModel();
 };
 
 #endif

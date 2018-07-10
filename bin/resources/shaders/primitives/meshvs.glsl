@@ -10,8 +10,8 @@ uniform mat4 Projection;
 uniform mat4 LightSpaceMatrix;
 
 out VS_OUT {
-	vec3 Normal;
 	vec2 TexCoord;
+	vec3 Normal;
 	vec3 FragPos;
 	vec4 FragPosLightSpace;
 } vs_out;

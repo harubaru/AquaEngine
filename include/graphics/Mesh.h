@@ -1,13 +1,15 @@
 #ifndef AQUAENGINE_GRAPHICS_MESH_H
 #define AQUAENGINE_GRAPHICS_MESH_H
 
+#include <export.h>
+
 #include <iostream>
 #include <string>
 #include <vector>
-#include <GL/glew.h>
+#include <graphics/gl3w.h>
 #include <graphics/glm/glm.hpp>
 
-struct Vertex {
+struct API Vertex {
 	Vertex() : position(glm::vec3(0, 0, 0)), normal(glm::vec3(0, 0, 0)), texcoord(glm::vec2(0, 0)) {}
 	Vertex(float x, float y, float z, float nx, float ny, float nz, float u, float v) {
 		position = glm::vec3(x, y, z);
@@ -20,7 +22,7 @@ struct Vertex {
 	glm::vec2 texcoord;
 };
 
-class Mesh{
+class API Mesh {
 private:
 	GLsizei DrawCount;
 

@@ -1,5 +1,5 @@
 #include <graphics/TextRenderer.h>
-/*
+
 TextRenderer::TextRenderer(int InitialWidth, int InitialHeight)
 {
 	// enable blending
@@ -18,7 +18,7 @@ TextRenderer::TextRenderer(int InitialWidth, int InitialHeight)
 	glBindVertexArray(0);
 
 	// setup shader and shader data
-	mTextShader.Load("./resources/shaders/text/vert_text.glsl", "./resources/shaders/text/frag_text.glsl");
+	mTextShader.Load("./resources/shaders/primitives/text");
 	mTextShader.Bind();
 	mTextShader.SetMat4("Projection", glm::ortho(0.0f, (float)InitialWidth, 0.0f, (float)InitialHeight));
 	mTextShader.SetInt("Text", 0);
@@ -123,4 +123,3 @@ void TextRenderer::RenderText(std::string Text, float x, float y, float scale, g
 
 	mTextShader.Unbind();
 }
-*/

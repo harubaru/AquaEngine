@@ -1,21 +1,25 @@
 #ifndef SHADOWMAPPING_H
 #define SHADOWMAPPING_H
 
+#include <export.h>
+
 #include <iostream>
 #include <vector>
-#include <GL/glew.h>
+#include <graphics/gl3w.h>
 #include <graphics/Mesh.h>
 #include <graphics/Shader.h>
 #include <graphics/glm/glm.hpp>
 #include <graphics/glm/gtx/transform.hpp>
 
-void ShadowMapping_Init(Shader &shader);
-void ShadowMapping_RenderDirectionalShadow(glm::vec3 light_pos, Shader &shader);
-void ShadowMapping_RenderReset(int w, int h);
-void ShadowMapping_RenderToScreen(bool debug);
+#include <core/ConVar.h>
 
-void ShadowMapping_Bind(void);
-void ShadowMapping_Unbind(void);
+API void ShadowMapping_Init(Shader &shader);
+API void ShadowMapping_RenderDirectionalShadow(glm::vec3 light_pos, glm::vec3 light_dir, Shader &shader);
+API void ShadowMapping_RenderReset(int w, int h);
+API void ShadowMapping_RenderToScreen(bool debug); // deprecated
+
+API void ShadowMapping_Bind(void);
+API void ShadowMapping_Unbind(void);
 
 
 #endif

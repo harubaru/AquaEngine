@@ -4,15 +4,21 @@ Camera::Camera(const glm::vec3& pos, float fov, float aspect, float zNear, float
 {
         m_Projection = glm::perspective(fov, aspect, zNear, zFar);
         m_pos = pos;
-        m_forward = glm::vec3(0, 0, -11);
+        m_forward = glm::vec3(0, 0, -1);
         m_up = glm::vec3(0, 1, 0);
         m_CursorLocked = false;
         m_MouseSensitivity = 2;
         m_HorizAngle = 0.f;
 }
 
-void Camera::Update(Display &display, float deltatime, const glm::vec3& pos, float fov, float aspect, float zNear, float zFar)
+void Camera::Update(Display &display, Input &input, float deltatime, bool freecam, float fov, float aspect, float zNear, float zFar)
 {
+
+	if (!input.FocusLossed())
+		UnlockCursor();
+	else
+		LockCursor();
+
         if (m_CursorLocked) {
                 int w, h, yaw, pitch;
                 display.GetSize(&w, &h);
@@ -31,10 +37,14 @@ void Camera::Update(Display &display, float deltatime, const glm::vec3& pos, flo
 
 			ProcessMouseMovement(xoffset * deltatime, yoffset * deltatime);
 		}
-        }
+
+		if (freecam)
+			this->FreeCam(input, deltatime);
+        } else {
+		SDL_SetWindowGrab(display.GetWindow(), SDL_FALSE);
+	}
 
         m_Projection = glm::perspective(glm::radians(fov), aspect, zNear, zFar);
-        m_pos = pos;
 }
 
 void Camera::ProcessMouseMovement(float xoffset, float yoffset)
@@ -53,6 +63,19 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset)
 	this->SetView(m_HorizAngle, m_VertAngle);
 }
 
+void Camera::FreeCam(Input &input, float deltatime)
+{
+	float velocity = 16 * deltatime;
+	if (input.GetKeyState(SDL_SCANCODE_W))
+		m_pos += m_forward * velocity;
+	if (input.GetKeyState(SDL_SCANCODE_S))
+		m_pos -= m_forward * velocity;
+	if (input.GetKeyState(SDL_SCANCODE_A))
+		m_pos -= m_right * velocity;
+	if (input.GetKeyState(SDL_SCANCODE_D))
+		m_pos += m_right * velocity;
+}
+
 void Camera::SetView(float yaw, float pitch)
 {
         glm::vec3 direction;
@@ -60,4 +83,6 @@ void Camera::SetView(float yaw, float pitch)
         direction.y = sin(glm::radians(pitch));
         direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 	m_forward = glm::normalize(direction);
+
+	m_right = glm::normalize(glm::cross(m_forward, m_up));
 }

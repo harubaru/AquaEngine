@@ -1,5 +1,7 @@
 #include <graphics/Shader.h>
 
+#include <core/Debug.h>
+
 std::string Shader::GetShaderSource(const std::string& ShaderPath)
 {
 	bool Failed(false);
@@ -123,6 +125,8 @@ void Shader::Load(const std::string& ShaderPath)
 	fs_path.append(ShaderPath);
 	fs_path.append(suffix[1]);
 
+	Debug_printf(nullptr, 0, "Loading Shader: %s\n", ShaderPath.c_str());
+
 	this->Load(vs_path, fs_path);
 }
 
@@ -140,13 +144,13 @@ void Shader::Load(const std::string& VertShaderFile, const std::string& FragShad
 	LinkShaders(VertShader, FragShader);
 }
 
-void Shader::SetModel(const glm::mat4& Model) { glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, "Model"), 1, GL_FALSE, glm::value_ptr(Model)); }
+void Shader::SetModel(const glm::mat4& Model) { glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, "Model"), 1, GL_FALSE, &Model[0][0]); }
 void Shader::SetView(const glm::mat4& View) { glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, "View"), 1, GL_FALSE, glm::value_ptr(View)); }
 void Shader::SetProjection(const glm::mat4& Projection) { glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, "Projection"), 1, GL_FALSE, glm::value_ptr(Projection)); }
 void Shader::SetVec3(const std::string& uniform, const glm::vec3& v) { glUniform3fv(glGetUniformLocation(ShaderProgram, uniform.c_str()), 1, glm::value_ptr(v)); }
 void Shader::SetFloat(const std::string& uniform, const float& f) { glUniform1f(glGetUniformLocation(ShaderProgram, uniform.c_str()), f); }
 void Shader::SetInt(const std::string& uniform, const int& i) { glUniform1i(glGetUniformLocation(ShaderProgram, uniform.c_str()), i); }
-void Shader::SetMat4(const std::string& uniform, const glm::mat4& m) { glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, uniform.c_str()), 1, GL_FALSE, glm::value_ptr(m)); }
+void Shader::SetMat4(const std::string& uniform, const glm::mat4& m) { glUniformMatrix4fv(glGetUniformLocation(ShaderProgram, uniform.c_str()), 1, GL_FALSE, &m[0][0]); }
 
 void Shader::Bind()
 {

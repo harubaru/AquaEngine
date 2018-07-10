@@ -12,15 +12,29 @@ Graphics::Graphics(Display& display)
 	m_Display = &display;
 
 	// Initializing GLEW
-	glewExperimental = true;
-	GLenum code = glewInit();
-	if(code != GLEW_OK)
-		std::cout << "GLEW Error: " << glewGetErrorString(code) << std::endl;
+        int ret = gl3wInit();
+	switch (ret) {
+	case GL3W_OK:
+		break;
+	case GL3W_ERROR_INIT:
+		/* This usually occurs when GL3W can't detect GL version */
+		LOG("GL3W can't detect OpenGL Version\n");
+		break;
+	case GL3W_ERROR_LIBRARY_OPEN:
+		LOG("GL3W can't detect OpenGL Library\n");
+		break;
+	case GL3W_ERROR_OPENGL_VERSION:
+		LOG("OpenGL Version 3.0 or higher is required to run this program\n");
+		break;
+	default:
+		break;
+	}
 
+	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 	glEnable(GL_BLEND);
+	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_FRAMEBUFFER_SRGB);
-	glEnable(GL_MULTISAMPLE);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
@@ -66,4 +80,18 @@ hardwareinfo_t Graphics::GetHardwareInfo()
 	};
 
 	return ret;
+}
+
+bool GL_IsSupported(std::string extension)
+{
+	const char *extensions_cstr = (const char *)glGetString(GL_EXTENSIONS);
+	std::string extensions(extensions_cstr);
+
+	// OpenGL is going to complain about us using a deprecated method to get a string of all extensions.
+	(void)glGetError();
+
+	if (extensions.find(extension) != std::string::npos)
+		return true;
+
+	return false;
 }

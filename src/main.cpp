@@ -12,8 +12,6 @@
 #include <core/SceneRenderer.h>
 #include <core/ConVar.h>
 #include <core/Debug.h>
-#include <core/SceneBrush.h>
-
 #include <AL/alc.h>
 #include <audio/ogg.h>
 
@@ -50,9 +48,6 @@ int main()
 	float width = ConVar_GetFloat("width");
 	float height = ConVar_GetFloat("height");
 
-	Test test;
-	BSPParser bspfile;
-
 	Display display(width, height, ConVar_GetString("title"), 0);
 	Graphics graphics(display);	
 
@@ -64,19 +59,15 @@ int main()
 
 	Skybox skybox("./resources/textures/skybox/browncloud", "jpg");
 
-	SceneBrush plane(50.0f, 50.0f, 20.0f, "./resources/textures/sand.jpg", vec3(0, 0, 0), vec3(0, 90, 0), vec3(1, 1, 1));
-	plane.Transform.SetRot(vec3(0, 0, 90), 0.0f);
-
 	SceneObject cube("./resources/meshes/Cube.obj", "./resources/textures/WoodPlanksDiffuseMap.jpg", vec3(0, 9, 0), vec3(0, 1, 0), vec3(6));
 	SceneObject dude("./resources/meshes/nanosuit.obj", "./resources/textures/smoothmetal.jpg", vec3(0, 1, 0), vec3(0, 1, 0), vec3(1));
 
 	TextRenderer textmgr(ConVar_GetFloat("width"), ConVar_GetFloat("height"));
 	textmgr.LoadFont("./resources/fonts/FreeSans.ttf", 15);
 	SceneRenderer scenemgr;
-	scenemgr.AddBrush(plane);
 
-	scenemgr.AddObj(cube);
-	scenemgr.AddObj(dude);
+	scenemgr.AddObject(cube);
+	scenemgr.AddObject(dude);
 	scenemgr.AddSkybox(skybox);
 
 	double delta = 0;

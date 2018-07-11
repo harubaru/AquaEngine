@@ -20,7 +20,7 @@ private:
 	void processSurfedgeLump(unsigned char* data, size_t data_len, bsp_lump_t* lump);
 	void processFaceLump(unsigned char* data, size_t data_len, bsp_lump_t* lump);
 public:
-	BSPParser() { Load("./resources/maps/maptest.bsp"); }
+	BSPParser(std::string &path) { Load(path); }
 
 	void Load(const std::string &path);
 

@@ -53,6 +53,7 @@ void ShadowMapping_RenderDirectionalShadow(glm::vec3 light_pos, glm::vec3 light_
 	shader.SetVec3("DirectionalLight.Direction", light_dir);
 	shader.SetVec3("DirectionalLight.Position", light_pos);
 	shader.SetInt("shadowFiltering", ConVar_GetFloat("mat_ShadowFiltering"));
+	shader.SetInt("shadowsEnabled", 1);
 	shader.Unbind();
 
 	FBShader.Bind();

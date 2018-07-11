@@ -23,16 +23,14 @@ private:
 	Shader shaders[4];
 	Framebuffer fb;
 	Skybox *skybox;
-	std::vector<SceneObject> object_renderlist;
-	std::vector<SceneBrush> brush_renderlist;
+	std::vector<SceneObject> renderlist;
 public:
 	SceneRenderer() { Load(); }
 
 	void Load();
 
-	void AddObj(SceneObject &ent);
-	void AddBrush(SceneBrush &ent);
-	void Remove(SceneObject &ent);
+	void AddObject(SceneObject &object);
+	void RemoveObject(SceneObject &object);
 
 	void AddSkybox(Skybox &skybox);
 

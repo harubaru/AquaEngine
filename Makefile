@@ -1,10 +1,10 @@
-#CXX = clang++ -target i686-pc-windows-gnu
-#CC = clang -target i686-pc-windows-gnu
-#LD = clang++ -target i686-pc-windows-gnu
+CXX = clang++ -target i686-pc-windows-gnu
+CC = clang -target i686-pc-windows-gnu
+LD = clang++ -target i686-pc-windows-gnu
 
-CXX = g++
-CC  = gcc
-LD  = g++
+#CXX = g++
+#CC  = gcc
+#LD  = g++
 
 INCLUDE_PATHS = -IC:./dependencies/includes -I/usr/include/freetype2
 LIBRARY_PATHS = -LC:./dependencies/libs
@@ -36,7 +36,7 @@ endif
 all: $(OBJS)
 	@echo $(LDMSG)
 	$(LD) $(OBJS) $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(LINKER_FLAGS) -o $(BINFOLDER)/$(BINARY).dll
-
+	
 test:
 	windres ./src/icon.rc -O coff -o ./src/icon.res
 	$(CXX) $(CXX_COMPILER_FLAGS) -c ./src/main.cpp -o ./src/main.o

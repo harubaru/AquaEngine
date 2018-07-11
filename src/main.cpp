@@ -7,6 +7,7 @@
 #include <graphics/Skybox.h>
 #include <graphics/TextRenderer.h>
 #include <graphics/ShadowMapping.h>
+#include <graphics/Map.h>
 #include <core/SceneObject.h>
 #include <core/Input.h>
 #include <core/SceneRenderer.h>
@@ -15,7 +16,6 @@
 #include <AL/alc.h>
 #include <audio/ogg.h>
 
-#include <core/Test.h>
 #include <core/BSPParser.h>
 
 void *audiothread(void *args)
@@ -57,6 +57,9 @@ int main()
 	Camera camera(glm::vec3(4, 5, 0), ConVar_GetFloat("cl_fov"), (float)width / (float)height, ConVar_GetFloat("cl_near"), ConVar_GetFloat("cl_far"));
 	camera.LockCursor();
 
+	BSPParser bsp(std::string("./resources/maps/maptest.bsp"));
+	Map map(&bsp);
+
 	Skybox skybox("./resources/textures/skybox/browncloud", "jpg");
 
 	SceneObject cube("./resources/meshes/Cube.obj", "./resources/textures/WoodPlanksDiffuseMap.jpg", vec3(0, 9, 0), vec3(0, 1, 0), vec3(6));
@@ -69,6 +72,7 @@ int main()
 	scenemgr.AddObject(cube);
 	scenemgr.AddObject(dude);
 	scenemgr.AddSkybox(skybox);
+	scenemgr.AddMap(map);
 
 	double delta = 0;
 

@@ -124,6 +124,20 @@ struct API bsp_vertex_t {
 	float z;
 } __attribute__((packed));
 
+struct API bsp_dplane_t
+{
+	float normal[3];
+	float dist;
+	int type;
+};
+
+struct API bsp_texinfo_t {
+	float textureVecs[2][4];
+	float lightmapVecs[2][4];
+	int flags;
+	int texdata;
+} __attribute__((packed));
+
 struct API bsp_edge_t {
 	short unsigned int v[2];
 } __attribute__((packed));

@@ -4,8 +4,10 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <iostream>
 
 #include <graphics/glm/glm.hpp>
+#include <graphics/Mesh.h>
 #include <core/BSPFile.h>
 #include <core/Debug.h>
 
@@ -20,9 +22,10 @@ private:
 	void processSurfedgeLump(unsigned char* data, size_t data_len, bsp_lump_t* lump);
 	void processFaceLump(unsigned char* data, size_t data_len, bsp_lump_t* lump);
 public:
-	BSPParser(std::string &path) { Load(path); }
+	BSPParser(const std::string &path) { Load(path); }
 
 	void Load(const std::string &path);
+	void GetMeshes(void);
 
 	std::vector<glm::vec3> vertices;
 	std::vector<bsp_edge_t> map_edges;

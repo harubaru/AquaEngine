@@ -8,7 +8,6 @@
 
 #include <core/ConVar.h>
 #include <core/SceneObject.h>
-#include <core/SceneBrush.h>
 
 #include <graphics/Display.h>
 #include <graphics/Shader.h>
@@ -17,12 +16,14 @@
 #include <graphics/Framebuffer.h>
 #include <graphics/Display.h>
 #include <graphics/Skybox.h>
+#include <graphics/Map.h>
 
 class API SceneRenderer {
 private:
 	Shader shaders[4];
 	Framebuffer fb;
 	Skybox *skybox;
+	Map *map;
 	std::vector<SceneObject> renderlist;
 public:
 	SceneRenderer() { Load(); }
@@ -33,6 +34,7 @@ public:
 	void RemoveObject(SceneObject &object);
 
 	void AddSkybox(Skybox &skybox);
+	void AddMap(Map &map);
 
 	void Update(Display &display, Camera &camera);
 };

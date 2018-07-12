@@ -9,10 +9,8 @@ GLuint Texture_Load(const char *f)
 	unsigned char *data = stbi_load(f, &width, &height, &components, 0);
 
 	// if data is null, stbi_load didn't find the file.
-	if (!data) {
-		std::cout << "Unable to load image: " << f << std::endl;
+	if (!data)
 		return 0;
-	}
 
 	glGenTextures(1, &tex);
 	glBindTexture(GL_TEXTURE_2D, tex);

@@ -1,24 +1,5 @@
 #include <graphics/Map.h>
 
-/*
-
-class API MapFace {
-private:
-	GLsizei DrawCount;
-	GLuint m_VertexArrayObject;
-	GLuint m_ElementBufferObject;
-public:
-	MapFace(std::vector<GLuint> indices);
-
-	void Load(std::vector<GLuint> indices);
-	void Destroy();
-
-	void Draw();
-}
-
-*/
-
-
 MapFace::MapFace(std::vector<GLuint> indices)
 {
 	Load(indices);
@@ -47,6 +28,12 @@ void MapFace::Load(std::vector<GLuint> indices)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
+void MapFace::Destroy()
+{
+	glDeleteVertexArrays(1, &m_VertexArrayObject);
+	glDeleteBuffers(1, &m_ElementBufferObject);
+}
+
 void MapFace::Draw()
 {
 	glBindVertexArray(m_VertexArrayObject);
@@ -65,12 +52,10 @@ Map::Map(BSPParser *parser)
 	Load(parser);
 }
 
-#include <iostream>
-
 void Map::Load(BSPParser *parser)
 {
 	if(!parser) {
-		std::cout << "Map Error: Map points to NULL." << std::endl;
+		LOG("Map Error: Map points to NULL.\n");
 		return;
 	}
 
@@ -115,6 +100,9 @@ void Map::Load(BSPParser *parser)
 
 void Map::Destroy()
 {
+	for (auto &i : mapfaces)
+		i.Destroy();
+
 	glDeleteBuffers(1, &m_VertexArrayBuffer);
 }
 

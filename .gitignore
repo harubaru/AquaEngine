@@ -12,3 +12,6 @@ libaquaengine.a
 # Editor Files
 *.swp
 .vscode
+
+# Debug Files
+*.log

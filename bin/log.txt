@@ -1,0 +1,7 @@
+[0.849000] Loading Shader: ./resources/shaders/primitives/skybox
+[1.037000] Loading Shader: ./resources/shaders/primitives/text
+[1.041000] Loading Shader: ./resources/shaders/primitives/mesh
+[1.042000] Loading Shader: ./resources/shaders/framebuffer/sm
+[1.043000] Loading Shader: ./resources/shaders/framebuffer/pp
+[1.044000] Loading Shader: ./resources/shaders/primitives/wireframe
+[1.152000] Loaded OGG file - Sampling Rate 44100 - Channels 2

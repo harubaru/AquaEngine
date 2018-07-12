@@ -4,7 +4,7 @@
 #include <export.h>
 
 #include <graphics/Model.h>
-#include <graphics/Texture.h>
+#include <graphics/TextureManager.h>
 #include <graphics/Shader.h>
 #include <graphics/MeshTransform.h>
 #include <graphics/ShadowMapping.h>
@@ -15,9 +15,9 @@ private:
 	GLuint mTexture;
 public:
 	SceneObject() {}
-	SceneObject(const std::string& ModelPath, const std::string& TexturePath, vec3 Position, vec3 RotAxis, vec3 Scale);
+	SceneObject(const std::string& ModelPath, const std::string& TextureName, vec3 Position, vec3 RotAxis, vec3 Scale);
 
-	void Load(const std::string& ModelPath, const std::string& TexturePath, vec3 Position, vec3 RotAxis, vec3 Scale);
+	void Load(const std::string& ModelPath, const std::string& TextureName, vec3 Position, vec3 RotAxis, vec3 Scale);
 	void Destroy();
 	void Render(Shader& shader);
 

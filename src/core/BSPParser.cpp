@@ -1,10 +1,9 @@
-#include <stdio.h>
 #include <core/BSPParser.h>
 
 void BSPParser::Load(const std::string &path)
 {
 	std::ifstream file(path, std::ios::in | std::ios::ate | std::ios::binary);
-	uint8_t* data;
+	unsigned char* data;
 	size_t data_len;
 
 	/* Get file size */
@@ -13,49 +12,47 @@ void BSPParser::Load(const std::string &path)
 	file.seekg(0, file.beg);
 
 	/* Read file into a buffer */
-	data = new uint8_t[data_len];
+	data = new unsigned char[data_len];
 	file.read((char*)data, data_len);
 	file.close();
 
-	processHeader(data, data_len);
+	bool success = true;
+	if (!processHeader(data, data_len))
+		success = false;
 
-	delete data;  // TODO: delete data if an exception occurs and forward it
+	delete data;
 }
 
-void BSPParser::processHeader(uint8_t* data, size_t data_len) {
+bool BSPParser::processHeader(unsigned char* data, size_t data_len) {
 	bsp_header_t* header;
 
-	printf("Processing bsp header\n");
-
 	if (sizeof(*header) > data_len) {
-		LOG("Not enough data in buffer to hold header, file is probably invallid?");
+		LOG("Invalid BSP file\n");
+		return false;
 	}
 
 	/* Set header struct to point to its location in the file */
 	header = (bsp_header_t*)(data);
-	printf(" Header info: \n\t VERSION:  %i\n\t REVISION: %i\n",
-		header->version, header->map_revision);
 
-	/* Get file identifier and check it against the expected value */
 	if (header->file_identifier != BSP_FILE_IDENTIFIER) {
-		LOG("Bad BSP file identifier.");
+		LOG("Invalid BSP file identifier.\n"); 
+		return false;
+	}
+	if (header->version < 17 || header->version > 29) { 
+		LOG("Invalid BSP file version.\n");
+		return false;
 	}
 
-	/* Check file version */
-	if (header->version < 17 || header->version > 29) {
-	// NOTE: Info on versions: https://developer.valvesoftware.com/wiki/Source_BSP_File_Format#Versions
-		LOG("Unrecognized BSP file version.");
-	}
-
-	for (int i=0; i < BSP_TOTAL_LUMPS; i++) {
+	for (int i=0; i < BSP_TOTAL_LUMPS; i++)
 		processLump(data, data_len, i, &header->lumps[i]);
-	}
+
+	return true;
 }
 
-void BSPParser::processLump(uint8_t* data, size_t data_len, uint32_t lump_type, bsp_lump_t* lump) {
+void BSPParser::processLump(unsigned char* data, size_t data_len, uint32_t lump_type, bsp_lump_t* lump) {
 	/* Make sure the location the lump indicates data is in is inside the file */
 	if (lump->file_offset >= data_len) {
-		LOG("Not enough data in buffer to hold header, file is probably invallid?");
+		LOG("Not enough data in buffer to hold header\n");
 	}
 
 	switch(lump_type) {
@@ -142,80 +139,55 @@ void BSPParser::processLump(uint8_t* data, size_t data_len, uint32_t lump_type, 
 	case LUMP_DISP_MULTIBLEND:
 	break;
 	default:
-		LOG("Encountered unknown lump type.");
+		LOG("Encountered unknown lump type.\n");
 	}
 }
 
-void BSPParser::processVertexLump(uint8_t* data, size_t data_len, bsp_lump_t* lump) {
+void BSPParser::processVertexLump(unsigned char* data, size_t data_len, bsp_lump_t* lump) {
 	bsp_vertex_t* verts;
 	size_t number_verts;
 
-	printf("Processing vertex lump...\n");
+	if (data_len < lump->file_offset + lump->size)
+		LOG("Vertex lump doesn't seem to fit in the data buffer?\n");
 
-	/* Make sure lump values look ok */
-	if (data_len < lump->file_offset + lump->size) {
-		LOG("Vertex lump doesn't seem to fit in the data buffer?");
-	}
+	if ((lump->size % sizeof(*verts)) != 0)
+		LOG("Vertex lumps are uneven\n");
 
-	/* Sanity check more values */
-	if ((lump->size % sizeof(*verts)) != 0) {
-		LOG("Vertex lumps are uneven");
-	}
-
-	/* */
 	verts = (bsp_vertex_t*)(data + lump->file_offset);
 	number_verts = lump->size / sizeof(*verts);
 
-	/* */
-	for (size_t i = 0; i < number_verts; i++) {
-		printf("\t VERTEX: %f %f %f\n", verts[i].x, verts[i].y, verts[i].z);
+	for (size_t i = 0; i < number_verts; i++)
 		vertices.push_back({ verts[i].x, verts[i].y, verts[i].z });
-	}
 }
 
-void BSPParser::processEdgeLump(uint8_t* data, size_t data_len, bsp_lump_t* lump) {
+void BSPParser::processEdgeLump(unsigned char* data, size_t data_len, bsp_lump_t* lump) {
 	bsp_edge_t* edges;
 	size_t number_edges;
 
-	printf("Processing edge lump...\n");
+	if (data_len < lump->file_offset + lump->size)
+		LOG("Edge lump doesn't seem to fit in the data buffer?\n");
 
-	/* Make sure edge values look ok */
-	if (data_len < lump->file_offset + lump->size) {
-		LOG("Edge lump doesn't seem to fit in the data buffer?");
-	}
+	if ((lump->size % sizeof(*edges)) != 0)
+		LOG("Edge lumps are uneven\n");
 
-	/* Sanity check more values */
-	if ((lump->size % sizeof(*edges)) != 0) {
-		LOG("Edge lumps are uneven");
-	}
-
-	/* */
 	edges = (bsp_edge_t*)(data + lump->file_offset);
 	number_edges = lump->size / sizeof(*edges);
 
 
-	for (size_t i = 0; i < number_edges; i++) {
+	for (size_t i = 0; i < number_edges; i++)
 		map_edges.push_back(edges[i]);
-	}
 }
 
-void BSPParser::processSurfedgeLump(uint8_t* data, size_t data_len, bsp_lump_t* lump) {
+void BSPParser::processSurfedgeLump(unsigned char* data, size_t data_len, bsp_lump_t* lump) {
 	bsp_surfedge_t* surfedges;
 	size_t number_surfedges;
 
-	printf("Processing surfedge lump...\n");
+	if (data_len < lump->file_offset + lump->size)
+		LOG("Surfedge lump doesn't seem to fit in the data buffer?\n");
 
-	/* Make sure edge values look ok */
-	if (data_len < lump->file_offset + lump->size) {
-		LOG("Surfedge lump doesn't seem to fit in the data buffer?");
-	}
+	if ((lump->size % sizeof(*surfedges)) != 0)
+		LOG("Surfedge lumps are uneven\n");
 
-	/* Sanity check more values */
-	if ((lump->size % sizeof(*surfedges)) != 0) {
-		LOG("Surfedge lumps are uneven");
-	}
-
-	/* */
 	surfedges = (bsp_surfedge_t*)(data + lump->file_offset);
 	number_surfedges = lump->size / sizeof(*surfedges);
 
@@ -225,23 +197,16 @@ void BSPParser::processSurfedgeLump(uint8_t* data, size_t data_len, bsp_lump_t* 
 	}
 }
 
-void BSPParser::processFaceLump(uint8_t* data, size_t data_len, bsp_lump_t* lump) {
+void BSPParser::processFaceLump(unsigned char* data, size_t data_len, bsp_lump_t* lump) {
 	bsp_face_t* faces;
 	size_t number_faces;
 
-	printf("Processing face lump...\n");
+	if (data_len < lump->file_offset + lump->size)
+		LOG("Face lump doesn't seem to fit in the data buffer?\n");
 
-	/* Make sure edge values look ok */
-	if (data_len < lump->file_offset + lump->size) {
-		LOG("Face lump doesn't seem to fit in the data buffer?");
-	}
+	if ((lump->size % sizeof(*faces)) != 0)
+		LOG("Face lumps are uneven\n");
 
-	/* Sanity check more values */
-	if ((lump->size % sizeof(*faces)) != 0) {
-		LOG("Face lumps are uneven");
-	}
-
-	/* */
 	faces = (bsp_face_t*)(data + lump->file_offset);
 	number_faces = lump->size / sizeof(*faces);
 

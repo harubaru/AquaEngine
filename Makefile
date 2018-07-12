@@ -9,8 +9,8 @@ LD = clang++ -target i686-pc-windows-gnu
 INCLUDE_PATHS = -IC:./dependencies/includes -I/usr/include/freetype2
 LIBRARY_PATHS = -LC:./dependencies/libs
 
-C_COMPILER_FLAGS = -I./include -O0 $(INCLUDE_PATHS)
-CXX_COMPILER_FLAGS = -ggdb -std=c++14 -I./include -O0 -Wall -Wextra $(INCLUDE_PATHS)
+C_COMPILER_FLAGS = -I./include -O2 $(INCLUDE_PATHS)
+CXX_COMPILER_FLAGS = -std=c++14 -I./include -O2 -Wall -Wextra $(INCLUDE_PATHS)
 
 BINFOLDER = ./bin
 
@@ -18,7 +18,7 @@ include ./src/Makefile
 
 ifeq ($(OS), Windows_NT)
 	BINARY = aquaengine
-	LIBRARIES = -ggdb -lpthread -lSDl2 -lglew32 -lopengl32 -lassimp -lfreetype -lopenal32 -logg -lvorbis -lvorbisfile
+	LIBRARIES = -lpthread -lSDl2 -lglew32 -lopengl32 -lassimp -lfreetype -lopenal32 -logg -lvorbis -lvorbisfile
 	LINKER_FLAGS = -DDLL_BUILD $(LIBRARIES) -shared -Wl,--out-implib=$(BINFOLDER)/lib$(BINARY).a
 
 	LDMSG = LD $(BINARY)
@@ -55,4 +55,4 @@ test:
 clean:
 	rm -rf $(OBJS) ./src/main.o
 
-#$(V).SILENT:
+$(V).SILENT:

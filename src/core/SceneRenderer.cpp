@@ -105,7 +105,8 @@ void SceneRenderer::Update(Display &display, Camera &camera)
 		for (auto &i : this->renderlist)
 			i.Render(this->shaders[WIREFRAME_SHADER]);
 
-		map->Render(this->shaders[WIREFRAME_SHADER]);
+		if (map)
+			map->Render(this->shaders[WIREFRAME_SHADER]);
 		
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 

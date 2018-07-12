@@ -1,14 +1,14 @@
 #include <core/SceneObject.h>
 
-SceneObject::SceneObject(const std::string& ModelPath, const std::string& TexturePath, vec3 Position, vec3 RotAxis, vec3 Scale)
+SceneObject::SceneObject(const std::string& ModelPath, const std::string& TextureName, vec3 Position, vec3 RotAxis, vec3 Scale)
 {
-	Load(ModelPath, TexturePath, Position, RotAxis, Scale);
+	Load(ModelPath, TextureName, Position, RotAxis, Scale);
 }
 
-void SceneObject::Load(const std::string& ModelPath, const std::string& TexturePath, vec3 Position, vec3 RotAxis, vec3 Scale)
+void SceneObject::Load(const std::string& ModelPath, const std::string& TextureName, vec3 Position, vec3 RotAxis, vec3 Scale)
 {
 	mModel.Load(ModelPath);
-	mTexture = Texture_Load(TexturePath.c_str());
+	mTexture = TextureManager_GetTexture(TextureName);
 	Transform.Load(Position, RotAxis, Scale);
 }
 

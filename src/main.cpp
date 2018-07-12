@@ -8,11 +8,13 @@
 #include <graphics/TextRenderer.h>
 #include <graphics/ShadowMapping.h>
 #include <graphics/Map.h>
+#include <graphics/TextureManager.h>
 #include <core/SceneObject.h>
 #include <core/Input.h>
 #include <core/SceneRenderer.h>
 #include <core/ConVar.h>
 #include <core/Debug.h>
+
 #include <AL/alc.h>
 #include <audio/ogg.h>
 
@@ -51,19 +53,21 @@ int main()
 	Display display(width, height, ConVar_GetString("title"), 0);
 	Graphics graphics(display);	
 
+	TextureManager_Parse("./resources/cfg/textures.res");
+
 	Clock clock;
 	Clock_Initialize(&clock);
 
 	Camera camera(glm::vec3(4, 5, 0), ConVar_GetFloat("cl_fov"), (float)width / (float)height, ConVar_GetFloat("cl_near"), ConVar_GetFloat("cl_far"));
 	camera.LockCursor();
 
-	BSPParser bsp(std::string("./resources/maps/maptest.bsp"));
+	BSPParser bsp(std::string("./resources/maps/mapbasic.bsp"));
 	Map map(&bsp);
 
 	Skybox skybox("./resources/textures/skybox/browncloud", "jpg");
 
-	SceneObject cube("./resources/meshes/Cube.obj", "./resources/textures/WoodPlanksDiffuseMap.jpg", vec3(0, 9, 0), vec3(0, 1, 0), vec3(6));
-	SceneObject dude("./resources/meshes/nanosuit.obj", "./resources/textures/smoothmetal.jpg", vec3(0, 1, 0), vec3(0, 1, 0), vec3(1));
+	SceneObject cube("./resources/meshes/Cube.obj", "woodplanks001", vec3(0, 9, 0), vec3(0, 1, 0), vec3(6));
+	SceneObject dude("./resources/meshes/nanosuit.obj", "sand001", vec3(0, 1, 0), vec3(0, 1, 0), vec3(1));
 
 	TextRenderer textmgr(ConVar_GetFloat("width"), ConVar_GetFloat("height"));
 	textmgr.LoadFont("./resources/fonts/FreeSans.ttf", 15);
@@ -100,6 +104,7 @@ int main()
 	}
 
 	pthread_cancel(audio_thread);
+	TextureManager_Destroy();
 	Debug_Kill();
 
 	return 0;

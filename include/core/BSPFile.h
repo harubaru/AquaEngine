@@ -1,26 +1,3 @@
-/*
- * source-engine-map-renderer - A toy project for rendering source engine maps
- * Copyright (C) 2018 nyxxxie
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.	If not, see <http://www.gnu.org/licenses/>.
- */
-/**
- * @file
- * @brief Contains definitions for constructs that exist in a BSP file.
- *
- */
-
 #ifndef AQUAENGINE_CORE_BSPFILE_H
 #define AQUAENGINE_CORE_BSPFILE_H
 
@@ -104,47 +81,47 @@
 #define LUMP_DISP_MULTIBLEND 63
 
 
-struct API bsp_lump_t {
+struct bsp_lump_t {
 	unsigned int file_offset;	// Where this lump's data is located
 	unsigned int size;	// How much space this lump takes up
 	unsigned int version;	// Version of this lump
 	unsigned int identifier;	// Lump identifier code
 } __attribute__((packed));
 
-struct API bsp_header_t {
+struct bsp_header_t {
 	unsigned int file_identifier;	// Should be equal to BSP_FILE_IDENTIFIER
 	unsigned int version;	// Version of the BSP file format we're using
 	bsp_lump_t lumps[BSP_TOTAL_LUMPS];	// The meat of the bsp file
 	unsigned int map_revision;	// version number of the map
 } __attribute__((packed));
 
-struct API bsp_vertex_t {
+struct bsp_vertex_t {
 	float x;
 	float y;
 	float z;
 } __attribute__((packed));
 
-struct API bsp_dplane_t
+struct bsp_dplane_t
 {
 	float normal[3];
 	float dist;
 	int type;
 };
 
-struct API bsp_texinfo_t {
+struct bsp_texinfo_t {
 	float textureVecs[2][4];
 	float lightmapVecs[2][4];
 	int flags;
 	int texdata;
 } __attribute__((packed));
 
-struct API bsp_edge_t {
+struct bsp_edge_t {
 	short unsigned int v[2];
 } __attribute__((packed));
 
 typedef int bsp_surfedge_t;
 
-struct API bsp_face_t {
+struct bsp_face_t {
 	short unsigned int plane_index;
 	unsigned char side;
 	unsigned char on_node;	//

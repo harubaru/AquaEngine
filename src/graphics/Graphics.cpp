@@ -85,6 +85,10 @@ hardwareinfo_t Graphics::GetHardwareInfo()
 bool GL_IsSupported(std::string extension)
 {
 	const char *extensions_cstr = (const char *)glGetString(GL_EXTENSIONS);
+	
+	if (!extensions_cstr)
+		return false;
+	
 	std::string extensions(extensions_cstr);
 
 	// OpenGL is going to complain about us using a deprecated method to get a string of all extensions.

@@ -14,6 +14,7 @@ extern "C" {
 #include <windows.h>
 #elif defined(__linux__)
 #include <sys/time.h>
+#include <time.h>
 #else
 #include <time.h>
 #endif

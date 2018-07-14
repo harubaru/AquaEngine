@@ -6,6 +6,7 @@
 #include <graphics/gl3w.h>
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdarg.h>
 #include <time.h>
 #include <string.h>
@@ -20,6 +21,7 @@ extern "C" {
 API void Debug_Init(const char *fp);
 API void Debug_printf(const char *file, unsigned line, const char *s, ...);
 API void Debug_AssertGL(const char *file, unsigned line);
+API void Debug_FatalError();
 API void Debug_Kill(void);
 
 #ifdef __cplusplus

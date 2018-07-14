@@ -13,6 +13,8 @@
 #include <graphics/Shader.h>
 #include <graphics/gl3w.h>
 
+#include <core/ConVar.h>
+
 struct API hardwareinfo_t;
 
 class API Graphics

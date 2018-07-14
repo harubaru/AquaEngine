@@ -19,15 +19,29 @@ Graphics::Graphics(Display& display)
 	case GL3W_ERROR_INIT:
 		/* This usually occurs when GL3W can't detect GL version */
 		LOG("GL3W can't detect OpenGL Version\n");
+		Debug_FatalError();
 		break;
 	case GL3W_ERROR_LIBRARY_OPEN:
 		LOG("GL3W can't detect OpenGL Library\n");
+		Debug_FatalError();
 		break;
 	case GL3W_ERROR_OPENGL_VERSION:
-		LOG("OpenGL Version 3.0 or higher is required to run this program\n");
+		LOG("OpenGL Version 3.3 or higher is required to run this program\n");
+		Debug_FatalError();
 		break;
 	default:
 		break;
+	}
+
+	if (!gl3wIsSupported((int)ConVar_GetFloat("r_glmajor"), (int)ConVar_GetFloat("r_glminor"))) {
+		if (!gl3wIsSupported(3, 3)) {
+			LOG("OpenGL Version 3.3 or higher is required to run this program\n");
+			Debug_FatalError();
+		}
+
+		Debug_printf(__FILE__, __LINE__, "OpenGL Version %d.%d not supported by your graphics driver! Defaulting to OpenGL 3.3\n", (int)ConVar_GetFloat("r_glmajor"), (int)ConVar_GetFloat("r_glminor"));
+		ConVar_SetFloat("r_glmajor", 3);
+		ConVar_SetFloat("r_glminor", 3);
 	}
 
 	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);

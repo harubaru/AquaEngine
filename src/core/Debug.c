@@ -55,6 +55,12 @@ void Debug_AssertGL(const char *file, unsigned line)
 	}
 }
 
+void Debug_FatalError()
+{
+	Debug_Kill();
+	exit(EXIT_FAILURE);
+}
+
 void Debug_Kill(void)
 {
 	fclose(debug_file);

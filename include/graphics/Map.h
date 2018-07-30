@@ -15,9 +15,9 @@ private:
 	GLuint m_VertexArrayObject;
 	GLuint m_ElementBufferObject;
 public:
-	MapFace(std::vector<GLuint> indices);
+	MapFace(std::vector<GLushort> indices);
 
-	void Load(std::vector<GLuint> indices);
+	void Load(std::vector<GLushort> indices);
 
 	void Destroy();
 	void Draw();

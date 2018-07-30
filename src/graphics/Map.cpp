@@ -1,18 +1,20 @@
+#include <cstdlib>
+
 #include <graphics/Map.h>
 
-MapFace::MapFace(std::vector<GLuint> indices)
+MapFace::MapFace(std::vector<GLushort> indices)
 {
 	Load(indices);
 }
 
-void MapFace::Load(std::vector<GLuint> indices)
+void MapFace::Load(std::vector<GLushort> indices)
 {
 	glGenVertexArrays(1, &m_VertexArrayObject);
 	glBindVertexArray(m_VertexArrayObject);
 
 	glGenBuffers(1, &m_ElementBufferObject);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ElementBufferObject);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLushort), indices.data(), GL_STATIC_DRAW);
 
 	DrawCount = indices.size();
 
@@ -40,7 +42,7 @@ void MapFace::Draw()
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
-	glDrawElements(GL_TRIANGLES, DrawCount, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLE_STRIP, DrawCount, GL_UNSIGNED_SHORT, 0);
 	glDisableVertexAttribArray(2);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(0);
@@ -73,7 +75,7 @@ void Map::Load(BSPParser *parser)
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
 
 	for (bsp_face_t face : parser->map_faces) {
-		std::vector<GLuint> indices;
+		std::vector<GLushort> indices;
 		for (size_t i = face.first_edge; i < face.first_edge + face.num_edges; i++) {
 			unsigned short int edge1, edge2;
 

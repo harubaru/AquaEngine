@@ -39,8 +39,13 @@ void Display::DestroyWindow()
 
 void Display::Update()
 {
-	if (ConVar_GetFloat("r_vsync"))
-		SDL_GL_SetSwapInterval(1);
+	int vsync = (int)ConVar_GetFloat("r_vsync");
+	if (vsync == 1 || vsync == -1) {
+		if (SDL_GL_SetSwapInterval(vsync) == -1) {
+			LOG("vsync is not supported!");
+			ConVar_SetFloat("r_vsync", 0);
+		}
+	}
 	
 	SDL_GL_SwapWindow(m_Window);
 	m_Input.Update();

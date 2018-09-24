@@ -74,7 +74,6 @@ Skybox::Skybox(std::string filepath, std::string extension)
 
 Skybox::~Skybox()
 {
-        Destroy();
 }
 
 void Skybox::Destroy()

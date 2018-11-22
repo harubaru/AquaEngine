@@ -33,7 +33,7 @@ void *audiothread(void *args)
 	context = alcCreateContext(device, NULL);
 	alcMakeContextCurrent(context);
 
-	ogg music1("./resources/sound/music/dreams.ogg");
+	ogg music1("./resources/sound/music/fade.ogg");
 
 	while (true)
 		music1.Play();
@@ -61,8 +61,8 @@ int main()
 	Camera camera(glm::vec3(4, 5, 0), ConVar_GetFloat("cl_fov"), (float)width / (float)height, ConVar_GetFloat("cl_near"), ConVar_GetFloat("cl_far"));
 	camera.LockCursor();
 
-	BSPParser bsp(std::string("./resources/maps/mapbasic.bsp"));
-	Map map(&bsp);
+//	BSPParser bsp(std::string("./resources/maps/mapbasic.bsp"));
+//	Map map(&bsp);
 
 	Skybox skybox("./resources/textures/skybox/browncloud", "jpg");
 
@@ -76,7 +76,7 @@ int main()
 	scenemgr.AddObject(cube);
 	scenemgr.AddObject(dude);
 	scenemgr.AddSkybox(skybox);
-	scenemgr.AddMap(map);
+//	scenemgr.AddMap(map);
 
 	double delta = 0;
 

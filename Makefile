@@ -2,24 +2,27 @@
 INCLUDE_PATHS = -IC:./dependencies/includes -I/usr/include/freetype2
 LIBRARY_PATHS = -LC:./dependencies/libs
 
-C_COMPILER_FLAGS = -ggdb -I./include -O2 -Wall -Wextra -fPIC $(INCLUDE_PATHS)
-CXX_COMPILER_FLAGS = -ggdb -std=c++14 -I./include -O2 -Wall -Wextra -fPIC $(INCLUDE_PATHS)
+C_COMPILER_FLAGS = -ggdb -I./include -O2 -Wall -Wextra $(INCLUDE_PATHS)
+CXX_COMPILER_FLAGS = -ggdb -std=c++14 -I./include -O2 -Wall -Wextra $(INCLUDE_PATHS)
 
 BINFOLDER = ./bin
 
 include ./src/Makefile
 
 ifeq ($(OS), Windows_NT)
-	CXX = clang++ -target i686-pc-windows-gnu
-	CC = clang -target i686-pc-windows-gnu
-	LD = clang++ -target i686-pc-windows-gnu
+#	CXX = clang++ -target i686-pc-windows-gnu
+#	CC = clang -target i686-pc-windows-gnu
+#	LD = clang++ -target i686-pc-windows-gnu
+	CXX = g++
+	CC = gcc
+	LD = g++
 	WINDRES = windres ./src/icon.rc -O coff -o ./src/icon.res
 	RES = ./src/icon.res
 
 	BINARY = aquaengine
 	EXTENSION = dll
 	TESTBINARY = test.exe
-	LIBRARIES = -lpthread -lSDl2 -lopengl32 -lassimp -lfreetype -lopenal32 -logg -lvorbis -lvorbisfile
+	LIBRARIES = -lpthread -lSDl2 -lopengl32 -lassimp -lfreetype -lopenal32 -lvorbisfile -lvorbis -logg
 	LINKER_FLAGS = -DDLL_BUILD $(LIBRARIES) -shared -Wl,--out-implib=$(BINFOLDER)/lib$(BINARY).a
 
 	LDMSG = LD $(BINARY)
@@ -38,7 +41,7 @@ else
 		BINARY = aquaengine
 		EXTENSION = so
 		TESTBINARY = test
-		LIBRARIES =  -lpthread -lGL -lSDL2 -lassimp -lfreetype -lopenal -logg -lvorbis -lvorbisfile
+		LIBRARIES =  -lpthread -lGL -lSDL2 -lassimp -lfreetype -lopenal -logg -lvorbisfile -lvorbis
 		LINKER_FLAGS   = -DDLL_BUILD $(LIBARIES) -shared -Wl,-soname,./lib$(BINARY).$(EXTENSION)
 
 		LDMSG = "LD $(BINARY)"

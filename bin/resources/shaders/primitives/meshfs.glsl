@@ -39,7 +39,7 @@ float ShadowCalculation()
 
 	float shadow = 0.0;
 
-	if (shadowFiltering) {
+	if (shadowFiltering != 0) {
 		vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
 		for (float x = -1.5; x <= 1.5; ++x) {
 			for (float y = -1.5; y <= 1.5; ++y) {

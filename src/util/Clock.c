@@ -81,8 +81,7 @@ void Clock_TickBegin(Clock* active_clock)
 void Clock_TickEnd(Clock* active_clock)
 {
 	clock_t diff = clock() - active_clock->start;
-	active_clock->DeltaTime = 1000.0 * diff / CLOCKS_PER_SEC;
-	active_clock->DeltaTime *= 0.001;
+	active_clock->DeltaTime = diff / CLOCKS_PER_SEC;
 }
 
 void Clock_Delay(unsigned int ms)
